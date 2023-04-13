@@ -12,9 +12,9 @@ router.get('/', async (req, res) => {
     const { limit } = req.query
     try {
         const valueReturned = await pm.getProducts()
-        if (valueReturned.error) return res.status(200).send({ status: 'Sin productos', valueReturned })
+        if (valueReturned.error) return res.status(200).send({ status: 'empty', valueReturned })
         const limitProduts = valueReturned.slice(0, limit)
-        res.status(200).send({ status: 'Productos', limitProduts })
+        res.status(200).send({ status: 'Products', limitProduts })
     }
     catch (err) {
         res.status(400).send({ status: 'error router', err })
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
         const campoVacio = Object.values(productSend).find(value => value === '')
         console.log(campoVacio);
         if (campoVacio) {
-            return res.status(400).send({ status: "error", message: "Falta completar algún campo" })
+            return res.status(400).send({ status: "error", message: " Error Complete all " })
         }
         // desestructuración para enviar al método addProduct
         const {
@@ -57,14 +57,14 @@ router.post('/', async (req, res) => {
             price,
             status,
             category,
-            thumbnail,
+            thumbnails,
             code,
             stock
         } = productSend
 
 
 
-        const valueReturned = await pm.addProduct(title, description, price, status,category, thumbnail, code, stock)
+        const valueReturned = await pm.addProduct(title, description, price, status,category, thumbnails, code, stock)
         console.log(valueReturned)
         // Si addProduct devuelve un objeto con la propiedad error quiere decir que hay un error
         if (valueReturned.status === 'error') return res.status(400).send({ valueReturned })
@@ -108,7 +108,7 @@ router.post('/formulario', uploader.single('thumbnail'), async (req, res) => {
             price,
             status,
             category,
-            thumbnail,
+            thumbnails,
             code,
             stock
         } = productSend
@@ -116,11 +116,11 @@ router.post('/formulario', uploader.single('thumbnail'), async (req, res) => {
 
         const campoVacio = Object.values(productSend).find(value => value === '')
         if (campoVacio) {
-            return res.status(400).send({ status: "error", message: "Falta completar algún campo" })
+            return res.status(400).send({ status: "error", message: " Error Complete all " })
         }
 
         // console.log(title, description, price, thumbnail, code, stock)
-        const valueReturned = await pm.addProduct(title, description, price, status,category, thumbnail, code, stock)
+        const valueReturned = await pm.addProduct(title, description, price, status,category, thumbnails, code, stock)
         // console.log(valueReturned)
         res.send(res.redirect("http://localhost:8080/static"))
     }

@@ -9,9 +9,10 @@ routerCar.get('/:cid', async (req, res) => {
     const { cid } = req.params
     try {
         const valueReturned = await carts.getCartById(cid)
-        if (valueReturned.error) return res.status(200).send({ status: 'Sin carritos', valueReturned })
+        if (valueReturned.error) return res.status(200).send({ status: 'No carts found', valueReturned })
 
-        res.status(200).send({ status: 'Carrito', valueReturned })
+        res.status(200).send({ status: 'Carts', valueReturned })
+        console.log(valueReturned);
     }
     catch (err) {
         res.status(400).send({ status: 'error router', err })
@@ -26,9 +27,9 @@ routerCar.post('/', async (req, res) => {
         console.log(cart)
         // Comprobamos que todos los campos estén completos
         const campoVacio = Object.values(cart).find(value => value === '')
-        console.log(campoVacio);
+        //console.log(campoVacio);
         if (campoVacio) {
-            return res.status(400).send({ status: "error", message: "Falta completar algún campo" })
+            return res.status(400).send({ status: "error", message: " Error Complete all " })
         }
 
         // Si addProduct devuelve un objeto con la propiedad error quiere decir que hay un error
@@ -42,33 +43,33 @@ routerCar.post('/', async (req, res) => {
 
 });
 
-routerCar.post('/:cid/product/:pid', async (req, res) => {
+routerCar.post('/:cid/products/:pid', async (req, res) => {
     try {   
         let { producto } = req.body
         const { cid, pid } = req.params
 
-        producto['idProduct'] = Number(pid)
+        producto['pid'] = Number(pid)
 
         const carrito = await carts.getCartById(cid)
         if (carrito.error) return res.status(400).send({ carrito })
 
         let productoEncontrado = carrito.productos.findIndex(productos => productos.idProduct == pid)
-         console.log(productoEncontrado, 'encontrado')
-        // console.log(carrito.productos[0]);
+         console.log(productoEncontrado, 'found')
+         console.log(carrito.productos[0]);
         if (productoEncontrado !== -1) {
             // carrito.productos[productoEncontrado]
             carrito.productos[productoEncontrado].cantidad = Number(carrito.productos[productoEncontrado].cantidad) + Number(producto.cantidad)
             console.log(carrito.productos);
             await carts.updateCart(cid, carrito)
-            return res.status(200).send({ statusbar: 'success', message: 'producto agregado'});
+            return res.status(200).send({ statusbar: 'success', message: 'added product'});
         }
         console.log(producto);
         carrito.productos.push(producto)
         console.log(carrito.productos);
         await carts.updateCart(cid, carrito)
-        res.status(200).send({status: 'success', message: 'producto agregado', carrito: carrito.productos})
+        res.status(200).send({status: 'success', message: 'added product', carrito: carrito.productos})
     } catch (err) {
-        return res.status(400).send({ status: "error", message: 'error de parametros' })
+        return res.status(400).send({ status: "error", message: 'parameter error' })
     }
 
 })

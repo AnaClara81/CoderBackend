@@ -51,7 +51,7 @@ class CartManager {
             const getFileCarts = await fs.promises.readFile(this.path, 'utf-8')
             const parseCarts = JSON.parse(getFileCarts);
             // console.log(parseCarts[id - 1]);
-            if (!parseCarts[id - 1]) return { error: 'Error! El carrito No existe' }
+            if (!parseCarts[id - 1]) return { error: 'Error! The cart does not exist' }
 
             return parseCarts[id - 1]
         }
@@ -65,10 +65,10 @@ class CartManager {
             const getFileCarts = await fs.promises.readFile(this.path, 'utf-8')
             const parseCarts = JSON.parse(getFileCarts);
             // console.log(parseProducts);
-            if (isNaN(Number(pid))) return { status: "error", message: 'No es un id válido' };
+            if (isNaN(Number(pid))) return { status: "error", message: 'Invalid id' };
 
             const findId = parseCarts.findIndex(product => product.id == pid)
-            if (findId === -1) return { status: "error", message: 'No se encontró el id' };
+            if (findId === -1) return { status: "error", message: 'id not found' };
 
             this.carts = parseCarts.map(element => {
                 if(element.id == cid){
