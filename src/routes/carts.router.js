@@ -47,28 +47,29 @@ routerCar.post('/:cid/products/:pid', async (req, res) => {
     try {   
         let { producto } = req.body
         const { cid, pid } = req.params
-
-        producto['pid'] = Number(pid)
+        console.log(cid);
+        producto['id'] = Number(pid)
 
         const carrito = await carts.getCartById(cid)
         if (carrito.error) return res.status(400).send({ carrito })
-
-        let productoEncontrado = carrito.productos.findIndex(productos => productos.idProduct == pid)
+         console.log(carrito);
+        let productoEncontrado = carrito.products.findIndex(productos => productos.id == pid)
          console.log(productoEncontrado, 'found')
-         console.log(carrito.productos[0]);
+         console.log(carrito.products[0]);
         if (productoEncontrado !== -1) {
             // carrito.productos[productoEncontrado]
-            carrito.productos[productoEncontrado].cantidad = Number(carrito.productos[productoEncontrado].cantidad) + Number(producto.cantidad)
-            console.log(carrito.productos);
+            carrito.products[productoEncontrado].quantity = Number(carrito.products[productoEncontrado].quantity) + Number(producto.quantity)
+            console.log(carrito.products);
             await carts.updateCart(cid, carrito)
             return res.status(200).send({ statusbar: 'success', message: 'added product'});
         }
         console.log(producto);
-        carrito.productos.push(producto)
-        console.log(carrito.productos);
+        carrito.products.push(producto)
+        console.log(carrito.products);
         await carts.updateCart(cid, carrito)
-        res.status(200).send({status: 'success', message: 'added product', carrito: carrito.productos})
+        res.status(200).send({status: 'success', message: 'added product', carrito: carrito.products})
     } catch (err) {
+        console.log(err);
         return res.status(400).send({ status: "error", message: 'parameter error' })
     }
 

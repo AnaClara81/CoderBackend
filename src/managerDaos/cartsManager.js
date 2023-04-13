@@ -71,7 +71,7 @@ class CartManager {
             if (findId === -1) return { status: "error", message: 'id not found' };
 
             this.carts = parseCarts.map(element => {
-                if(element.id == cid){
+                if(element.id == pid){
                     element = Object.assign(element, data);
                    return element
                 }
@@ -81,7 +81,7 @@ class CartManager {
 
             const toJSON = JSON.stringify(this.carts, null, 2);
             await fs.promises.writeFile(this.path, toJSON)
-            return returnedTarget
+            return this.carts
         }
         catch (err) {
             console.log(err);
