@@ -1,6 +1,8 @@
-<div>
-    <h1>Hola {{ users.nombre }} {{ users.apellido }} , que gusto verte!!</h1>
-    <h2>Email {{ users.correo }}</h2>
+
+{{!-- <h1>hola {{nombre}} {{apellido}}</h1> --}}
+ <div>
+    <h1>Hola {{user.nombre}} {{user.apellido}} , que gusto verte!!</h1>
+    <h2>Email {{user.correo}}</h2>
     {{#if isAdmin}}
     <h3>Es admin</h3>
     {{#each food}}
@@ -11,11 +13,11 @@
       {{/each}}
     {{else}}
     <h3>Ese user, no puede ver los productos</h3>
-    {{/if}}
-</div>
+    {{/if}} 
+</div>  
 
-{{!-- --}}
+{{!--<script src="/static/js/index.js"></script> --}}
 
 
- <script src="/static/js/index.js"></script>
+ 
 

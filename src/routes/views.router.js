@@ -52,6 +52,16 @@ const users = [
         role:'user'
     }
 ];
+ 
+
+router.get('chat',(req,res)=>{
+       res.render('chat',{})
+}) 
+
+router.get('/realtimeprod' , (req, res) =>{
+    res.render('realtimeprod',{})
+})
+
 
 router.get('/', (req, res)=>{
 

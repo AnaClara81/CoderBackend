@@ -1,0 +1,36 @@
+
+<div>
+   <h2> Realtime productos</h2>
+    <hr>
+   <div>
+
+    {{!-- <input type="text" name="chatbox" id="chatbox"> --}}
+    </div> 
+    <div>
+    <ul id="listproductos">
+    </ul>
+    </div>
+</div>
+{{!-- configuracion del socketcon cdn --}}
+<script src=" http://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+
+<script>
+    console.log('socket')
+    const socket = io()
+
+socket.on('productos', data =>{
+    console.log(data)
+
+    let div = document.getElementById('listProducts')
+    let productos =''
+    data.forEach((product) =>{
+        productos +=`<div> ${product.title} precio: ${product.price}</div>`
+    })
+    div.innerHtml = productos
+})
+
+
+</script> 
+{{!-- <script src="/static/js/productos.js"></script> --}}
