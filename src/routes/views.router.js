@@ -55,12 +55,12 @@ const users = [
 
 router.get('/', (req, res)=>{
 
-    let user = users[Math.floor(Math.random() * users.lenght)]
+    let user = users [Math.floor(Math.random() * users.lenght)]
     
     let testUser = {
        title:'ecommerce',
        user,
-       isAdmin: user.role === 'admin',
+       isAdmin: users.role === 'admin',
        food,
        style:'index.css'
        

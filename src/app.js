@@ -10,7 +10,24 @@ import viewsRouter from './routes/views.router.js'
 //import uploader from '../utils/multer.utils.js'
 import __dirname from './utils/dirname.js';
 const path = './utils/dirname.js';
+
+//----------------------------------------------------------------
+import { Server } from 'socket.io';
 const app = express()
+const PORT = 8080
+
+const httpServer = app.listen(PORT,()=>{
+    console.log(`Escuchando en el puerto: ${PORT}`)
+})
+
+const socketServer = new Server(httpServer)
+
+
+
+
+
+//---------------------------------------------------
+
 //hbs-------------------------------------------------------------------------------
 
 //const handlebars = require ('express-handlebars').engine
@@ -18,15 +35,12 @@ const app = express()
 import handlebars from 'express-handlebars'
 
 app.engine('handlebars', handlebars.engine())
-app.set('views', '/views')
+app.set('views','./views')
 app.set('view engine', 'handlebars')
 
 //hbs---------------------------------------------------------------------------------
 
-const PORT = 8080
-app.listen(PORT,()=>{
-    console.log(`Escuchando en el puerto: ${PORT}`)
-})
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.json()) // body-parser
 
@@ -52,6 +66,8 @@ function mid2(req,res,next){
 
 
 app.use('/', viewsRouter)
+
+
 // GET http://localhost:8080 /usuarios
 //app.use('api/usuarios',mid1, userRouter)
     
@@ -69,11 +85,42 @@ app.use('/api/carts', routerCar)
     })
 })*/
 
+app.get('/chat',(req, res)=>{
+res.render('chat',{})
+})
 
+
+socketServer.on('connection', socket => {
+    console.log('Nuevo cliente conectado')
+    console.log(socket.id);
+
+ /*   socket.on('message',data => {
+        console.log(data)
+    })
+
+    socket.emit('evento-para-socket-individual','Este mensaje lo va a recibir un cliente socket')
+
+    socket.broadcast.emit('evt-p-todo-menos-el-socket-actual','Evento que veran todos los sockets menos el actual')
+    
+    socketServer.emit('evt-para-todos','este mensaje lo reciben todos los socket conectados')*/
+
+
+    let logs = []
+    socket.on("message1", data =>{
+        io.emit('log',data);
+    })
+  //message2 se utilñiza para la parte de almacenar y devolver
+  socket.on("message2", data =>{
+    logs.push({socketid:socket.id,message:data})
+    io.emit('log',{logs});
+
+  })
+})
 
 app.use((err, req, res, next) => {
     console.log(err)
-     res.status(500).send('Todo mal')
+     res.status(500).send
+     
 })
 
 
