@@ -2,6 +2,7 @@
 import { Router } from "express";
 const router = Router()
 
+
 let food =[
     {name:'Hamburguesa', price:150},
     {name:'Pizza', price:250},
@@ -52,32 +53,34 @@ const users = [
         role:'user'
     }
 ];
+
+router.get('/', (req, res)=>{
+    let user = users[Math.floor( Math.random() * users.length )]
+
+    let testUser = {
+        title: 'ecommerce',
+        user,
+        isAdmin: user.role == 'admin',
+       food,
+       style:'index.css'
+    }
+
+     res.render('index', testUser)
+ })
  
 
-router.get('chat',(req,res)=>{
-       res.render('chat',{})
-}) 
 
+
+
+/* router.get('chat',(req,res)=>{
+       res.render('layouts/chat',{})
+}) 
+ */
 router.get('/realtimeprod' , (req, res) =>{
     res.render('realtimeprod',{})
 })
 
 
-router.get('/', (req, res)=>{
-
-    let user = users [Math.floor(Math.random() * users.lenght)]
-    
-    let testUser = {
-       title:'ecommerce',
-       user,
-       isAdmin: users.role === 'admin',
-       food,
-       style:'index.css'
-       
-    }
-   
-    res.render('index', testUser)
-})
 
 router.get('/register' , (req, res) =>{
     res.render('registerForm',{

@@ -1,22 +1,20 @@
 
-{{!-- <h1>hola {{nombre}} {{apellido}}</h1> --}}
- <div>
-    <h1>Hola {{user.nombre}} {{user.apellido}} , que gusto verte!!</h1>
-    <h2>Email {{user.correo}}</h2>
+<div>
+    <h1>Hola {{user.nombre}} {{user.apellido}}, que gusto verte!!</h1>
+    <h2>Email: {{user.correo}}</h2>
     {{#if isAdmin}}
-    <h3>Es admin</h3>
-    {{#each food}}
-      <div>
-        <p>{{this.name}}</p>
-        <p>{{this.price}}</p>
-      </div>
-      {{/each}}
+        <h3>Es admin</h3>
+        {{#each food}}
+            <div>
+                <p>{{this.name}}</p>
+                <p>{{this.price}}</p>
+            </div>
+        {{/each}}
     {{else}}
-    <h3>Ese user, no puede ver los productos</h3>
-    {{/if}} 
-</div>  
-
-{{!--<script src="/static/js/index.js"></script> --}}
+        <h3>Es user, no puede ver los productos</h3>
+    {{/if}}
+</div>
+<script src="/static/js/index.js"></script>
 
 
  
