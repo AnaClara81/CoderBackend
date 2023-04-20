@@ -12,8 +12,8 @@ const __dirname = dirname(__filename);
 
 //----------------------------------------------------------------
 import { Server } from 'socket.io';
-
-
+import socketChat from './utils/socketChat.js';
+import socketProducts from './utils/socketProducts.js';
 const app = express()
 const PORT = 8080
 
@@ -21,7 +21,7 @@ const httpServer = app.listen(PORT,()=>{
     console.log(`Escuchando en el puerto: ${PORT}`)
 })
 
-const socketServer= new Server(httpServer)
+const io = new Server(httpServer)
 
 //---------------------------------------------------
 
@@ -80,29 +80,16 @@ app.use('/api/products', productRouter)
 app.use('/api/carts', routerCar)
 
 
-
-app.get('/chat',(req, res)=>{
+///esta en views.router
+/*app.get('/chat',(req, res)=>{
 res.render('layouts/chat',{})
-})
+})*/  
 
-let messages = []
-socketServer.on('connection', socket => {
-    console.log('Nuevo cliente conectado')
-    //console.log(socket.id);
-  //recibimos el mensaje  
-    socket.on('message',data => {
-      //console.log(data)
-      messages.push(data)
 
-      //se lo enviamos a todos
-      socketServer.emit('messageLogs' , messages)
-    }) 
-
-    socket.on ('authenticated',data =>{
-        socket.broadcast.emit('newUserConnected', data)
-    })
-    
-   /* socket.emit('evento-para-socket-individual','Este mensaje lo va a recibir un cliente socket')
+socketChat(io)
+socketProducts(io)
+   
+/* socket.emit('evento-para-socket-individual','Este mensaje lo va a recibir un cliente socket')
     
    socket.broadcast.emit('evt-p-todo-menos-el-socket-actual','Evento que veran todos los sockets menos el actual')
     
@@ -119,7 +106,7 @@ socketServer.on('connection', socket => {
         socketServer.emit('log',{logs});
         
     }) */
-})
+
 
 ///socketProduct(io) // ERROR socketProduct is not defined
 

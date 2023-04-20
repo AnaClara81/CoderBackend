@@ -7,7 +7,7 @@ const router = Router()
 //import express from 'express'// se trae el modulo express
 const pm = new productManager()
 
-router.get('/', async (req, res) => {
+ router.get('/', async (req, res) => {
     // http://localhost:8080/products?limit=2
     const { limit } = req.query
     try {
@@ -20,7 +20,13 @@ router.get('/', async (req, res) => {
         res.status(400).send({ status: 'error router', err })
     }
 
-})
+}) 
+
+
+
+
+
+
 
 router.get('/:pid', async (req, res) => {
     try {

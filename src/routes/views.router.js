@@ -72,12 +72,12 @@ router.get('/', (req, res)=>{
 
 
 
-/* router.get('chat',(req,res)=>{
+ router.get('chat',(req,res)=>{
        res.render('layouts/chat',{})
 }) 
- */
+ 
 router.get('/realtimeprod' , (req, res) =>{
-    res.render('realtimeprod',{})
+    res.render('layouts/realtimeprod',{})
 })
 
 
