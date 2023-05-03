@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import productManagerMongo from '../managerDaos/mongo/product.mongo.js'
+import productManager from '../managerDaos/productManager.js'
 //import socketProducts from '../utils/socketProducts'
 const router = Router()
 
@@ -13,7 +14,7 @@ router.get('/', async (req,res)=>{
     try{
         const products = await productManagerMongo.getProducts()
         res.status(200).send({
-            status:'succes',
+            status:'success',
             payload: products
 
         })
@@ -22,10 +23,39 @@ router.get('/', async (req,res)=>{
     }
     
 })
+router.get('/:pid', async (req,res)=>{
+    try{
+        const{pid} =req.params
+        let product = await productManager.getProductById(pid)
+        res.status(200).send({
+            status:'success',
+            payload:product
+        })
+    }catch (error)  {
 
-router.get('/:pid', (req,res)=>{
-    res.status(200).send('get productos')
+        console.log(error);
+    }
 })
+
+
+router.post('/', async (req,res)=>{
+   try{
+    const newProduct = req.body
+
+    let result = await productManager.addProduct()
+    res.status(200).send({
+        status:'success',
+        payload: products
+    })
+
+} catch
+   {
+
+}
+})
+
+
+
 router.post('/', (req,res)=>{
     res.status(200).send('Crear productos')
 })

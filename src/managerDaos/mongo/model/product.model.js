@@ -1,6 +1,6 @@
 
-import Schema from 'mongoose'
-import model from 'mongoose'
+import { Schema,model }from 'mongoose'
+//import model from 'mongoose'
 
 const collection = 'products'
 
@@ -25,6 +25,10 @@ const productSchema = new Schema({
         type: Number,
         required: true
     },
+    status: Boolean,
+    
+    category:String,
+    
     code: {
         type: String,
         unique: true,

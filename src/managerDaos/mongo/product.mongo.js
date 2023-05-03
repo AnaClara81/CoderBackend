@@ -1,4 +1,4 @@
-import productModel from './model/product.model'
+import productModel from './model/product.model.js'
 
 
 class ProductManagerMongo {
@@ -10,8 +10,27 @@ class ProductManagerMongo {
             return new Error(err)
         }
     }
-    async getProductsById(pid){}
-    async addProduct(){}
+
+    async getProductsById(pid){
+        try{
+        
+            return await productModel.finOne({_id: pid})
+        }catch(error){
+            return new Error (error)
+        }
+        
+    }
+    
+    
+    async addProduct(newProduct){
+       try{
+
+        return await productModel.create(newProduct)
+    }catch(error){
+        return new Error (error)
+    }
+    
+}
     async updateProduct(){pid}
     async deleteProduct(){pid}
 }

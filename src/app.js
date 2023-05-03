@@ -11,6 +11,8 @@ const __dirname = dirname(__filename);
 import routerServer from './routes/index.js'
 import mongoose from 'mongoose'
 import  connectDb  from './config/configServer.js'
+//import  connectDb  from './config/objetConfig.js'
+
 
 
 //----------------------------------------------------------------
@@ -20,6 +22,7 @@ import socketProducts from './utils/socketProducts.js';
 const app = express()
 
 connectDb();
+//ObjetConfig.connectDb()
 const PORT = 8080
 
 
