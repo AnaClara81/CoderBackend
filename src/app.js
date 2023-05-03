@@ -8,6 +8,9 @@ import {fileURLToPath} from 'url';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+import routerServer from './routes/index.js'
+import mongoose from 'mongoose'
+import  connectDb  from './config/configServer.js'
 
 
 //----------------------------------------------------------------
@@ -15,7 +18,10 @@ import { Server } from 'socket.io';
 import socketChat from './utils/socketChat.js';
 import socketProducts from './utils/socketProducts.js';
 const app = express()
+
+connectDb();
 const PORT = 8080
+
 
 const httpServer = app.listen(PORT,()=>{
     console.log(`Escuchando en el puerto: ${PORT}`)
@@ -70,15 +76,15 @@ function mid2(req,res,next){
     res.render('index',testUser)
  })*/  
 
-app.use('/', viewsRouter)
+/* app.use('/', viewsRouter)
 app.use('/register', viewsRouter)
 //app.use('/chat', viewsRouter)
 //router de productos
 app.use('/api/products', productRouter)
 
 //router de carrito
-app.use('/api/carts', routerCar)
-
+app.use('/api/carts', routerCar) */
+ app.use(routerServer)
 
 ///esta en views.router
 /*app.get('/chat',(req, res)=>{

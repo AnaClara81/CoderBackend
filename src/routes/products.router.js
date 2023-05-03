@@ -1,11 +1,63 @@
-//const { Router } = require ('express')
 import { Router } from 'express'
-import productManager from '../managerDaos/productManager.js'
-import uploader from "../utils/multer.utils.js";
+import productManagerMongo from '../managerDaos/mongo/product.mongo.js'
+//import socketProducts from '../utils/socketProducts'
 const router = Router()
 
+//import productManager from '../managerDaos/productManager.js'
+//import uploader from "../utils/multer.utils.js";
+
 //import express from 'express'// se trae el modulo express
-const pm = new productManager()
+
+
+router.get('/', async (req,res)=>{
+    try{
+        const products = await productManagerMongo.getProducts()
+        res.status(200).send({
+            status:'succes',
+            payload: products
+
+        })
+    }catch(error) {
+        console.log(error);
+    }
+    
+})
+
+router.get('/:pid', (req,res)=>{
+    res.status(200).send('get productos')
+})
+router.post('/', (req,res)=>{
+    res.status(200).send('Crear productos')
+})
+
+router.put('/:pid', (req,res)=>{
+    res.status(200).send('Actualizar productos')
+})
+router.delete('/:pid', (req,res)=>{
+    res.status(200).send('Borrar productos')
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* const pm = new productManager()
 
  router.get('/', async (req, res) => {
     // http://localhost:8080/products?limit=2
@@ -170,7 +222,7 @@ router.delete('/:pid', async (req, res) => {
 
 });
 
-
+ */
 
 export default router
 //module.exports = router
