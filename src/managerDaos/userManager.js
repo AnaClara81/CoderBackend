@@ -1,5 +1,6 @@
-const fs = require('fs')
-const crypto = require('crypto')
+//const fs = require('fs')
+import fs from 'fs'
+//const crypto = require('crypto')
 
 const path = './files/Usuarios.json'
 
@@ -67,8 +68,7 @@ class ManagerUsuarios {
     }
 }
 
-module.exports =  ManagerUsuarios
-
+export default  ManagerUsuarios
 
 // crypto.createHash(algoritmo):
 // Crea y devuelve un nuevo objeto hash, un hash criptográfico con el algoritmo dado que puede ser usado para generar el hash digests.

@@ -3,24 +3,47 @@
 ### GET 
 GET http://localhost:8080/api/products
 ### GET 
-GET http://localhost:8080/api/products/id
+       
+GET http://localhost:8080/api/products/64554db0435426c8226d7832
 ### POST 
-POST http://localhost:8080/api/products/
+POST http://localhost:8080/api/products
 Content-Type: application/json
 
 {
-    "title": "Producto 2",
-    "description": "descripción 2",
-    "thumbnail": "",
-    "price": 2500,
-    "stock": 100,
-    "code": "0002"
-}
+    "title":"Dulce de batata ", 
+    "description":"Con agar agar",
+    "thumbnail": "Sin imagen",
+    "price": 750,
+    "stock": 25,
+    "status": true,
+    "category":"Dulces en barra",
+    "code": "022"
+   
+    }
+
+
 
 ### PUT 
-PUT http://localhost:8080/api/products/id
+       
+PUT http://localhost:8080/api/products/6458cf03cc3904a1d2ee905d
+
+  {
+    "title":"Mermelada tomate ", 
+    "description":"sin piel, de tomate redondo",
+    "thumbnail": "Sin imagen",
+    "price": 450,
+    "stock": 25,
+    "status": true,
+    "category":"Mermelada",
+    "code": "012"
+   
+    }
+
+       
+   
 ###
-DELETE http://localhost:8080/api/products/id
+DELETE http://localhost:8080/api/products/645631a1d72288160fb66c89
+
 
 
 
@@ -29,3 +52,55 @@ DELETE http://localhost:8080/api/products/id
 
 ### GET 
 GET http://localhost:8080/api/usuarios
+
+### post
+POST  http://localhost:8080/api/usuarios
+Content-Type: application/json
+
+{
+    "nombre": "Laura",
+    "apellido": "Mujica",
+    "email":"lau@gmail.com"
+}
+
+
+###PUT
+
+PUT  http://localhost:8080/api/usuarios/64538bceea31e1b168e75697
+Content-Type: application/json
+
+{
+    "nombre": "Alejandro",
+    "apellido": "Lopez Rizzi",
+    "email":"alelop@gmail.com"
+}
+
+### DELETE
+DELETE http://localhost:8080/api/usuarios/
+
+
+### CARRITO
+
+GET http://localhost:8080/api/carts
+
+###CARRITO BY ID
+GET http://localhost:8080/api/carts/
+
+
+###
+POST  http://localhost:8080/api/carts
+Content-Type: application/json
+
+{
+    "products": [
+        {
+            "quantity":3,
+            "_id":"6454cd02e6fce186a6d41e09"
+        },
+        {
+            "quantity":2,
+            "_id":"64554db0435426c8226d7832"
+        }
+    ]
+}
+

@@ -7,7 +7,7 @@ import connect from 'mongoose';
       console.log('Base de datos conectada');
   }
  }  */
- let url ='mongodb+srv://anaceceiza81:UlisesBruno21@cluster0.eiuzcsf.mongodb.net/?retryWrites=true&w=majority'
+ let url ='mongodb+srv://anaceceiza81:UlisesBruno21@cluster0.eiuzcsf.mongodb.net/comision39750?retryWrites=true&w=majority'
 const connectDb = async () => {
     try {
       await mongoose.connect(url, {

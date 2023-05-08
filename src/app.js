@@ -1,6 +1,7 @@
 import express from 'express'// se trae el modulo express
 import cookieParser from 'cookie-parser'  
-//import uploader from '../utils/multer.utils.js'
+import uploader from '../src/utils/multer.utils.js'
+import userRouter from'./routes/users.router.js'
 import productRouter from'./routes/products.router.js'
 import routerCar from './routes/carts.router.js'
 import viewsRouter from './routes/views.router.js'
@@ -12,8 +13,7 @@ import routerServer from './routes/index.js'
 import mongoose from 'mongoose'
 import  connectDb  from './config/configServer.js'
 //import  connectDb  from './config/objetConfig.js'
-
-
+import bodyParser from 'body-parser'
 
 //----------------------------------------------------------------
 import { Server } from 'socket.io';
@@ -52,9 +52,10 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 app.use(express.json()) // body-parser
 app.use(express.urlencoded({extended: true}))
 app.use('/static', express.static(__dirname+'/public'))
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
-
+//console.log(__dirname+'/public');
 
 
 function mid1(req,res,next){
@@ -81,15 +82,29 @@ function mid2(req,res,next){
 
 /* app.use('/', viewsRouter)
 app.use('/register', viewsRouter)
-//app.use('/chat', viewsRouter)
+//app.use('/chat', viewsRouter)*/
+
+ http://localhost:8080 /api/usuarios
+app.use('/api/usuarios',  userRouter)
+
+
 //router de productos
 app.use('/api/products', productRouter)
 
 //router de carrito
-app.use('/api/carts', routerCar) */
+app.use('/api/carts', routerCar) 
  app.use(routerServer)
 
-///esta en views.router
+app.post('/upload', uploader.single('myFile'), (req,res)=>{
+    res.send({
+        status:'success',
+        mensaje:'Archivo subido con exito'
+    })
+}) 
+
+
+
+ ///esta en views.router
 /*app.get('/chat',(req, res)=>{
 res.render('layouts/chat',{})
 })*/  
@@ -125,7 +140,7 @@ app.use((err, req, res, next) => {
     console.log(err)
      res.status(500).send('Todo mal')
      
-})
+}) 
 
 
 

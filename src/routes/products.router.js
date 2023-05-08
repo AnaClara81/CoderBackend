@@ -1,7 +1,9 @@
 import { Router } from 'express'
 import productManagerMongo from '../managerDaos/mongo/product.mongo.js'
-import productManager from '../managerDaos/productManager.js'
+//import productManager from '../managerDaos/productManager.js'
 //import socketProducts from '../utils/socketProducts'
+import productManager from '../managerDaos/productManager.js'
+import productModel from '../managerDaos/mongo/model/product.model.js'
 const router = Router()
 
 //import productManager from '../managerDaos/productManager.js'
@@ -14,7 +16,7 @@ router.get('/', async (req,res)=>{
     try{
         const products = await productManagerMongo.getProducts()
         res.status(200).send({
-            status:'success',
+            status:'success, get',
             payload: products
 
         })
@@ -25,47 +27,94 @@ router.get('/', async (req,res)=>{
 })
 router.get('/:pid', async (req,res)=>{
     try{
-        const{pid} =req.params
-        let product = await productManager.getProductById(pid)
+        const{pid} = req.params
+        let product = await productManagerMongo.getProductById(pid)
         res.status(200).send({
-            status:'success',
-            payload:product
+            status:'success, get id',
+            payload: product
+         
         })
     }catch (error)  {
 
         console.log(error);
     }
-})
+}) 
 
 
 router.post('/', async (req,res)=>{
-   try{
-    const newProduct = req.body
+    try {
+        const newProduct = req.body
+console.log(newProduct);
+        let result = await productManagerMongo.addProduct(newProduct)
 
-    let result = await productManager.addProduct()
-    res.status(200).send({
-        status:'success',
-        payload: products
+
+        res.status(200).send({
+            status: 'success',
+            payload: result
+        })
+       // console.log(result)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+router.put('/:pid', async (req,res) =>{
+  
+    const { pid } = req.params
+    const products = req.body
+
+
+  console.log(pid);
+        
+      let  productToReplace = {
+             title: products.title,
+             description: products.description,
+             thumbnail:products.thumbnail,
+             price:products.price,
+             stock:products.stock,
+             code:products.stock,
+             status:products.status,
+             category:products.category
+ 
+          }  
+
+     const result = await productManagerMongo.updateProduct({ _id: pid }, productToReplace )
+       
+     console.log(products);
+        console.log(productToReplace);
+        
+        res.status(200).send({
+            status: 'success',
+            payload: result
+        })
+
     })
+ 
 
-} catch
-   {
 
-}
+    
+
+
+router.delete('/:pid', async (req,res)=>{
+    try {
+        const { pid } = req.params
+        const product = req.body
+
+        let result = await productManagerMongo.deleteProduct(pid, product)
+
+
+        res.status(200).send({
+            status: 'success',
+            payload: result
+        })
+       // console.log(result)
+    } catch (error) {
+        console.log(error)
+    }
 })
+    ///res.status(200).send('Borrar productos')
 
-
-
-router.post('/', (req,res)=>{
-    res.status(200).send('Crear productos')
-})
-
-router.put('/:pid', (req,res)=>{
-    res.status(200).send('Actualizar productos')
-})
-router.delete('/:pid', (req,res)=>{
-    res.status(200).send('Borrar productos')
-})
 
 
 

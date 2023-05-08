@@ -5,16 +5,16 @@ class ProductManagerMongo {
    
     async getProducts(){
         try{
-            return await productModel.find({})
+            return await productModel.find().lean()
         }catch(err){
             return new Error(err)
         }
     }
 
-    async getProductsById(pid){
+    async getProductById(pid){
         try{
         
-            return await productModel.finOne({_id: pid})
+            return await productModel.findOne({ _id: pid})
         }catch(error){
             return new Error (error)
         }
@@ -24,15 +24,32 @@ class ProductManagerMongo {
     
     async addProduct(newProduct){
        try{
-
-        return await productModel.create(newProduct)
-    }catch(error){
+            return await productModel.create(newProduct)
+       } 
+         catch(error){
         return new Error (error)
-    }
+       }
     
 }
-    async updateProduct(){pid}
-    async deleteProduct(){pid}
-}
+    async updateProduct({ _id: pid }, productToReplace ){
+        
+     try{
+            return await productModel.updateOne({ _id: pid }, productToReplace )
+            //updateOne({_id: pid}, productToReplace )
+            
+        }catch(error){
+            return new Error (error)
+           }
+    } 
+
+    
+   async deleteProduct(pid){
+        try{
+            return await productModel.deleteOne({_id: pid})
+        }catch(error){
+            return new Error (error)
+           }
+    }
+} 
 
 export default  new ProductManagerMongo;

@@ -4,7 +4,57 @@ import CartManager from "../managerDaos/cartsManager.js";
 const routerCar = Router();
 const carts = new CartManager
 
+routerCar.get ('/', async (req,res)=>{
+    try{
+    const result = await carts.getCarts()
+    res.send(result)
+}catch(error){
+return new Error (error)
+}
+})
 
+routerCar.get('/:cid', async (req,res)=>{
+    try{
+        const { cid } = req.params
+    const result = await carts.getCartsById(cid)
+
+    if(result.message){
+    return res.status(200).send(result.message)
+}
+}catch(error){
+return new Error (error)
+}
+})
+
+routerCar.post('/', async (req,res)=>{
+    try{
+        const products = req.body
+    const result = await carts.addCarts(products)
+    return res.status(200).send(result)
+}catch(error){
+return new Error (error)
+}
+})
+
+routerCar.post('/:cid/product/:pid', async (req,res)=>{
+    try{
+        let { cid, pid } = req.params
+        const {quantity} = req.body
+
+        const product = {
+            pid,
+            quantity
+        }
+        
+    const result = await carts.addProductInCart(cid, product)
+    return res.status(200).send(result)
+}catch(error){
+return new Error (error)
+}
+})
+
+
+/* 
 routerCar.get('/:cid', async (req, res) => {
     const { cid } = req.params
     try {
@@ -73,6 +123,6 @@ routerCar.post('/:cid/products/:pid', async (req, res) => {
         return res.status(400).send({ status: "error", message: 'parameter error' })
     }
 
-})
+}) */
 
 export default routerCar

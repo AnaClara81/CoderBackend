@@ -1,4 +1,54 @@
-import fs from 'fs';
+import  cartModel  from "./mongo/model/cart.model.js"
+import { Types } from "mongoose";
+class CartManager {
+   
+    getCarts =async() =>{
+        try{
+          return await cartModel.find()
+        }catch(error){
+            return new Error (error)
+        }
+    }
+
+
+    getCartsById = async(cartId) =>{
+          try{
+           return await cartModel.findOne({ _id: cartId})
+         }catch(error){
+            return new Error (error)
+    }
+}
+
+    addCart = async(cart) =>{
+       try{
+           return await cartModel.create({ cart})
+   }   catch(error){
+    return new Error (error)
+}
+}
+
+    addProductInCart = async(cid, productFromBody) =>{
+          try{
+            const result = await cartModel.findOne({_id: cid})
+            const findProduct = result.products.some((product) =>product._id.toString() === new Types.ObjectId(productFromBody.pid).toString())
+           if(findProduct){
+
+               return await cartModel.updateOne({ _id: cid, "products._id": productFromBody.pid},{$inc:{"products.$.quantity" :productFromBody.quantity}})
+           }
+           return await cartModel.updateOne({ _id: cid},{$push:{products:{_id:productFromBody.pid, quantity:productFromBody.quantity }}})
+    }       
+      catch(error){
+         
+        return new Error (error)
+    }
+    }
+}
+
+
+
+
+
+/* import fs from 'fs';
 
 class CartManager {
     constructor() {
@@ -88,7 +138,7 @@ class CartManager {
         }
 
     }
-}
+} */
 
 // const carritos = new CartManager()
 
