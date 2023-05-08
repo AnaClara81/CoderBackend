@@ -10,14 +10,14 @@ POST http://localhost:8080/api/products
 Content-Type: application/json
 
 {
-    "title":"Dulce de batata ", 
+    "title":"Dulce de membrillo ", 
     "description":"Con agar agar",
     "thumbnail": "Sin imagen",
     "price": 750,
     "stock": 25,
     "status": true,
     "category":"Dulces en barra",
-    "code": "022"
+    "code": "024"
    
     }
 

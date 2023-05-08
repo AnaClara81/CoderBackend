@@ -6,10 +6,11 @@ import productManager from '../managerDaos/productManager.js'
 import productModel from '../managerDaos/mongo/model/product.model.js'
 const router = Router()
 
+ 
 //import productManager from '../managerDaos/productManager.js'
 //import uploader from "../utils/multer.utils.js";
 
-//import express from 'express'// se trae el modulo express
+import express from 'express'// se trae el modulo express
 
 
 router.get('/', async (req,res)=>{
