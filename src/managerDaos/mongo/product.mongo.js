@@ -5,7 +5,8 @@ class ProductManagerMongo {
    
     async getProducts(){
         try{
-            return await productModel.find().lean()
+            return await productModel.find({}).lean()
+            
         }catch(err){
             return new Error(err)
         }
@@ -31,11 +32,10 @@ class ProductManagerMongo {
        }
     
 }
-    async updateProduct({ _id: pid }, productToReplace ){
+    async updateProduct(pid, productToReplace ){
         
      try{
-            return await productModel.updateOne({ _id: pid }, productToReplace )
-            //updateOne({_id: pid}, productToReplace )
+            return await productModel.updateOne({ _id: pid },productToReplace)
             
         }catch(error){
             return new Error (error)

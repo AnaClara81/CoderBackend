@@ -12,9 +12,10 @@ const __dirname = dirname(__filename);
 import routerServer from './routes/index.js'
 import mongoose from 'mongoose'
 import  connectDb  from './config/configServer.js'
-//import  connectDb  from './config/objetConfig.js'
-import bodyParser from 'body-parser'
-
+//import configServer from './config/configServer.js'
+//import bodyParser from 'body-parser'
+import connect from 'mongoose';
+ 
 //----------------------------------------------------------------
 import { Server } from 'socket.io';
 import socketChat from './utils/socketChat.js';
@@ -52,8 +53,8 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 app.use(express.json()) // body-parser
 app.use(express.urlencoded({extended: true}))
 app.use('/static', express.static(__dirname+'/public'))
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
 //console.log(__dirname+'/public');
 
@@ -84,7 +85,8 @@ function mid2(req,res,next){
 app.use('/register', viewsRouter)
 //app.use('/chat', viewsRouter)*/
 
- http://localhost:8080 /api/usuarios
+
+//http://localhost:8080 /api/usuarios
 app.use('/api/usuarios',  userRouter)
 
 
@@ -92,8 +94,9 @@ app.use('/api/usuarios',  userRouter)
 app.use('/api/products', productRouter)
 
 //router de carrito
-app.use('/api/carts', routerCar) 
- app.use(routerServer)
+app.use('/api/carts', routerCar ) 
+
+app.use(routerServer)
 
 app.post('/upload', uploader.single('myFile'), (req,res)=>{
     res.send({

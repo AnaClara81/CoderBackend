@@ -18,9 +18,9 @@ router.get('/', async (req,res)=>{
         const products = await productManagerMongo.getProducts()
         res.status(200).send({
             status:'success, get',
-            payload: products
-
+            payload: products,
         })
+        console.log(products)
     }catch(error) {
         console.log(error);
     }
@@ -29,10 +29,10 @@ router.get('/', async (req,res)=>{
 router.get('/:pid', async (req,res)=>{
     try{
         const{pid} = req.params
-        let product = await productManagerMongo.getProductById(pid)
+        let products = await productManagerMongo.getProductById(pid)
         res.status(200).send({
             status:'success, get id',
-            payload: product
+            payload: products
          
         })
     }catch (error)  {
@@ -59,38 +59,67 @@ console.log(newProduct);
     }
 })
 
+/*router.put('/:uid', async (req, res) => {
+    const { pid } = req.params
+    const product = req.body
+    console.log(pid);
+    console.log(product);
+    // validar pid 
+    // if(!id)   
+    // validar campos 
+   // if(!product.title || !product.description || product.thumbnail || product.price 
+    //|| product.stock || product.status  || product.category  ){ 
+    //  return res.status(400).send({status:'error', mensaje: 'todos los campos son necesarios'})
+    //}
+         let  productToReplace = {
+              title: product.title,
+              description: product.description,
+              thumbnail:product.thumbnail,
+              price:product.price,
+              stock:product.stock,
+              code:product.stock,
+              status:product.status,
+              category:product.category
+       }  
+       let result = await productManagerMongo.updateProduct({ _id: pid }, productToReplace)
+       
+       console.log(productToReplace);
+
+    res.send({
+        status: 'success',
+        payload: result
+    })
+})*/
 
 router.put('/:pid', async (req,res) =>{
-  
+    try {
     const { pid } = req.params
-    const products = req.body
+    const product = req.body
+ console.log(pid)      
+ console.log(product);
+       let  productToReplace = {
+              title: product.title,
+              description: product.description,
+              thumbnail:product.thumbnail,
+             price:product.price,
+              stock:product.stock,
+              code:product.stock,
+              status:product.status,
+              category:product.category
+    }  
 
+const result = await productManagerMongo.updateProduct({ _id: pid}, productToReplace)
 
-  console.log(pid);
-        
-      let  productToReplace = {
-             title: products.title,
-             description: products.description,
-             thumbnail:products.thumbnail,
-             price:products.price,
-             stock:products.stock,
-             code:products.stock,
-             status:products.status,
-             category:products.category
- 
-          }  
-
-     const result = await productManagerMongo.updateProduct({ _id: pid }, productToReplace )
-       
-     console.log(products);
-        console.log(productToReplace);
+     console.log(productToReplace);
         
         res.status(200).send({
             status: 'success',
             payload: result
         })
-
-    })
+    } catch (error) {
+        console.log(error)
+    }
+    }) 
  
 
 

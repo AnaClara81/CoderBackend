@@ -16,25 +16,30 @@ return new Error (error)
 routerCar.get('/:cid', async (req,res)=>{
     try{
         const { cid } = req.params
-    const result = await carts.getCartsById(cid)
+    
+        const result = await carts.getCartById(cid)
+  
+        console.log(JSON.stringify(result, null, 2))
 
-    if(result.message){
-    return res.status(200).send(result.message)
-}
-}catch(error){
-return new Error (error)
-}
-})
-
-routerCar.post('/', async (req,res)=>{
-    try{
-        const products = req.body
-    const result = await carts.addCarts(products)
     return res.status(200).send(result)
+
 }catch(error){
 return new Error (error)
 }
 })
+
+routerCar.post('/', async (req, res) => {
+    try{
+        const { products } = req.body  
+
+        const newCart = await carts.addCart({ products })
+       
+        res.status(200).send(newCart);
+}catch(error){
+    res.status(500).send({ error: error.message });
+}
+})
+
 
 routerCar.post('/:cid/product/:pid', async (req,res)=>{
     try{
@@ -53,6 +58,18 @@ return new Error (error)
 }
 })
 
+routerCar.delete('/:cid', async (req, res) => {
+    try {
+        let { cid } = req.params
+      
+      let result = await carts.deleteCart({_id: cid})
+          
+       res.send({status: 'success', payload: result})
+        
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 /* 
 routerCar.get('/:cid', async (req, res) => {

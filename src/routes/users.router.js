@@ -1,4 +1,5 @@
 import  { Router } from 'express'
+import UserManagerMongo from '../managerDaos/mongo/user.mongo.js'
 import userModel  from '../managerDaos/mongo/model/user.model.js'
 import userManager from '../managerDaos/userManager.js'
 const router = Router()
@@ -7,11 +8,12 @@ const router = Router()
 
 router.get('/', async (req,res)=>{
     try{
-        let users = await userModel.find()
-        console.log(users)
+        const userManager = new UserManagerMongo()
+        const users = await userManager.getUsers()
+        //console.log(users)
      
         res.send({
-            status:'success',
+            status:'success,get',
             payload: users
         })
 

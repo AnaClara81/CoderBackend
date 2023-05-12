@@ -3,6 +3,7 @@ const router = Router()
 // import { viewsRouter } from './views.router'
 
 import productRouter from './products.router.js'
+import routerCar from './carts.router.js'
 // router.use('/', viewsRouter)
 // router.use('/register', viewsRouter)
 // app.use('/chat', viewsRouter)
@@ -10,7 +11,7 @@ import productRouter from './products.router.js'
 
 
 // //router de carrito
-// //router.use('/api/carts', routerCar)
+router.use('/api/carts', routerCar)
 
 // router.use('/',(req,res)=>{
 //     res.send('Hola mundo')

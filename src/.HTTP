@@ -9,35 +9,34 @@ GET http://localhost:8080/api/products/64554db0435426c8226d7832
 POST http://localhost:8080/api/products
 Content-Type: application/json
 
-{
-    "title":"Dulce de membrillo ", 
-    "description":"Con agar agar",
-    "thumbnail": "Sin imagen",
-    "price": 750,
-    "stock": 25,
-    "status": true,
-    "category":"Dulces en barra",
-    "code": "024"
-   
-    }
+ {
+              "title": "Mermelada de ciruelas amarillas",
+              "description": "Con ciruelas amarillas sin piel",
+              "thumbnail":"Sin imagen",
+              "price":300,
+              "stock":25,
+              "code":"006",
+              "status":true,
+              "category":"Mermelada"
+       }  
 
 
 
 ### PUT 
        
-PUT http://localhost:8080/api/products/6458cf03cc3904a1d2ee905d
+PUT http://localhost:8080/api/products/6454cd02e6fce186a6d41e09
 
-  {
-    "title":"Mermelada tomate ", 
-    "description":"sin piel, de tomate redondo",
-    "thumbnail": "Sin imagen",
-    "price": 450,
-    "stock": 25,
-    "status": true,
-    "category":"Mermelada",
-    "code": "012"
-   
-    }
+       {
+              "title": "Mermelada de ciruelas amarillas",
+              "description": "Con ciruelas amarillas sin piel",
+              "thumbnail":"Sin imagen",
+              "price":300,
+              "stock":25,
+              "code":"006",
+              "status":true,
+              "category":"Mermelada"
+       }  
+
 
        
    
@@ -58,25 +57,24 @@ POST  http://localhost:8080/api/usuarios
 Content-Type: application/json
 
 {
-    "nombre": "Laura",
-    "apellido": "Mujica",
-    "email":"lau@gmail.com"
+    "nombre": "Maria",
+    "apellido": "Fernandez",
+    "email":"mf@gmail.com"
 }
 
 
-###PUT
-
-PUT  http://localhost:8080/api/usuarios/64538bceea31e1b168e75697
+###PUT  
+PUT  http://localhost:8080/api/usuarios/645a91878aa172e22205c3f6
 Content-Type: application/json
 
 {
-    "nombre": "Alejandro",
-    "apellido": "Lopez Rizzi",
-    "email":"alelop@gmail.com"
+    "nombre": "Maria Jose",
+    "apellido": "Fernandez",
+    "email":"mjf@gmail.com"
 }
 
 ### DELETE
-DELETE http://localhost:8080/api/usuarios/
+DELETE http://localhost:8080/api/usuarios/645a91878aa172e22205c3f6
 
 
 ### CARRITO
@@ -84,23 +82,27 @@ DELETE http://localhost:8080/api/usuarios/
 GET http://localhost:8080/api/carts
 
 ###CARRITO BY ID
-GET http://localhost:8080/api/carts/
+GET http://localhost:8080/api/carts/645e1a5a70def041a8617864
 
 
 ###
-POST  http://localhost:8080/api/carts
+POST  http://localhost:8080/api/carts/
 Content-Type: application/json
 
-{
-    "products": [
-        {
-            "quantity":3,
-            "_id":"6454cd02e6fce186a6d41e09"
-        },
-        {
-            "quantity":2,
-            "_id":"64554db0435426c8226d7832"
-        }
-    ]
+ {
+           "products":[
+            {
+              "quantity":5,
+              "_id":"645b7ca45f92caa908961c8c"
+            },
+           {
+                "quantity":10 ,
+               "_id":"645961e320a141ad7e70219e"
+           }
+        ]
 }
+
+
+### DELETE
+DELETE http://localhost:8080/api/carts/645be27eb4534a9219bac368
 

@@ -1,4 +1,4 @@
-import  cartModel  from "./mongo/model/cart.model.js"
+import  cartModel   from "./mongo/model/cart.model.js"
 import { Types } from "mongoose";
 class CartManager {
    
@@ -11,21 +11,22 @@ class CartManager {
     }
 
 
-    getCartsById = async(cartId) =>{
+    getCartById = async(cartId) =>{
           try{
            return await cartModel.findOne({ _id: cartId})
-         }catch(error){
+        }catch(error){
             return new Error (error)
-    }
+        }
+       
 }
 
     addCart = async(cart) =>{
-       try{
-           return await cartModel.create({ cart})
-   }   catch(error){
-    return new Error (error)
-}
-}
+        try {
+            return await cartModel.create(cart);
+          } catch (error) {
+            throw new Error(error);
+          }
+        };
 
     addProductInCart = async(cid, productFromBody) =>{
           try{
@@ -33,15 +34,23 @@ class CartManager {
             const findProduct = result.products.some((product) =>product._id.toString() === new Types.ObjectId(productFromBody.pid).toString())
            if(findProduct){
 
-               return await cartModel.updateOne({ _id: cid, "products._id": productFromBody.pid},{$inc:{"products.$.quantity" :productFromBody.quantity}})
+        return await cartModel.updateOne({ _id: cid, "products._id": productFromBody.pid},{$inc:{"products.$.quantity" :productFromBody.quantity}})
            }
-           return await cartModel.updateOne({ _id: cid},{$push:{products:{_id:productFromBody.pid, quantity:productFromBody.quantity }}})
+        return await cartModel.updateOne({ _id: cid},{$push:{products:{_id:productFromBody.pid, quantity:productFromBody.quantity }}})
     }       
       catch(error){
          
         return new Error (error)
     }
     }
+
+ deleteCart = async(cid) =>{
+    try{
+        return await cartModel.deleteOne({_id: cid})
+    }catch(error){
+        return new Error (error)
+       }
+}
 }
 
 
