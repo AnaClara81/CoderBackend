@@ -16,6 +16,7 @@ class ProductManagerMongo {
         try{
         
             return await productModel.findOne({ _id: pid})
+
         }catch(error){
             return new Error (error)
         }

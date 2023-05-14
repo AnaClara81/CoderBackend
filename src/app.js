@@ -15,7 +15,8 @@ import  connectDb  from './config/configServer.js'
 //import configServer from './config/configServer.js'
 //import bodyParser from 'body-parser'
 import connect from 'mongoose';
- 
+
+
 //----------------------------------------------------------------
 import { Server } from 'socket.io';
 import socketChat from './utils/socketChat.js';
@@ -36,12 +37,12 @@ const io = new Server(httpServer)
 //---------------------------------------------------
 
 //hbs-------------------------------------------------------------------------------
-
+import path from 'path';
 import handlebars from 'express-handlebars'
 //import socketProduct from './utils/socketProduct.js'
 
 app.engine('handlebars', handlebars.engine())// inicializamos el motor de plantillas
-app.set('views', __dirname+'/views') //adonde va a buscar las carpetas
+app.set('views',path.join( __dirname+'/views')) //adonde va a buscar las carpetas
 
 app.set('view engine', 'handlebars')//para que use el motor de plantilla
 
@@ -106,8 +107,8 @@ app.post('/upload', uploader.single('myFile'), (req,res)=>{
 }) 
 
 
-
- ///esta en views.router
+ 
+///esta en views.router
 /*app.get('/chat',(req, res)=>{
 res.render('layouts/chat',{})
 })*/  

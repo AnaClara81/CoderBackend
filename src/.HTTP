@@ -4,35 +4,35 @@
 GET http://localhost:8080/api/products
 ### GET 
        
-GET http://localhost:8080/api/products/64554db0435426c8226d7832
+GET http://localhost:8080/api/products/6460df995ccbf883599ed46b
 ### POST 
 POST http://localhost:8080/api/products
 Content-Type: application/json
 
  {
-              "title": "Mermelada de ciruelas amarillas",
-              "description": "Con ciruelas amarillas sin piel",
+              "title": "Dulce de membrillo",
+              "description": "Con agar agar",
               "thumbnail":"Sin imagen",
-              "price":300,
+              "price":750,
               "stock":25,
-              "code":"006",
+              "code":"024",
               "status":true,
-              "category":"Mermelada"
+              "category":"Dulces en barra"
        }  
 
 
 
 ### PUT 
        
-PUT http://localhost:8080/api/products/6454cd02e6fce186a6d41e09
+PUT http://localhost:8080/api/products/645e6722d08dac4c5a5597f2
 
        {
-              "title": "Mermelada de ciruelas amarillas",
-              "description": "Con ciruelas amarillas sin piel",
+              "title": "Mermelada de tomates",
+              "description": "Con tomate perita sin piel",
               "thumbnail":"Sin imagen",
-              "price":300,
+              "price":550,
               "stock":25,
-              "code":"006",
+              "code":"010",
               "status":true,
               "category":"Mermelada"
        }  
@@ -82,7 +82,7 @@ DELETE http://localhost:8080/api/usuarios/645a91878aa172e22205c3f6
 GET http://localhost:8080/api/carts
 
 ###CARRITO BY ID
-GET http://localhost:8080/api/carts/645e1a5a70def041a8617864
+GET http://localhost:8080/api/carts/645be281b4534a9219bac36c
 
 
 ###
@@ -92,12 +92,12 @@ Content-Type: application/json
  {
            "products":[
             {
-              "quantity":5,
-              "_id":"645b7ca45f92caa908961c8c"
+              "quantity":8,
+              "_id":"645e14518d5293ac0886da45"
             },
            {
-                "quantity":10 ,
-               "_id":"645961e320a141ad7e70219e"
+                "quantity":4 ,
+               "_id":"645e6700d08dac4c5a5597f0"
            }
         ]
 }

@@ -2,21 +2,29 @@ import  { Router } from 'express'
 import UserManagerMongo from '../managerDaos/mongo/user.mongo.js'
 import userModel  from '../managerDaos/mongo/model/user.model.js'
 import userManager from '../managerDaos/userManager.js'
+import mongoosePaginate from 'mongoose-paginate-v2'
+
 const router = Router()
 
 
 
 router.get('/', async (req,res)=>{
     try{
-        const userManager = new UserManagerMongo()
-        const users = await userManager.getUsers()
+        //const userManager = new UserManagerMongo()
+        //const users = await userManager.getUsers()
+        const {page=1} = req.query
+        const users = await userModel.paginate({},{limit:10, page, lean:true})
+        const { docs, hasPrevPage, hasNextPage,prevPage, nextPage, totalPage } = users
         //console.log(users)
-     
-        res.send({
-            status:'success,get',
-            payload: users
-        })
-
+        //console.log(users[0]._id.toString())
+        res.render('C:\\Users\\anace\\Desktop\\CODERHOUSE BACKEND Practicos\\PracticosEntregas\\preEntregaUno\\src\\views\\layouts\\users', {
+            status: 'success',
+            users: docs,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage
+          });
     }catch (error){
         console.log(error);
     }

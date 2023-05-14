@@ -19,7 +19,7 @@ routerCar.get('/:cid', async (req,res)=>{
     
         const result = await carts.getCartById(cid)
   
-        console.log(JSON.stringify(result, null, 2))
+        console.log(JSON.stringify(result,null, 2))
 
     return res.status(200).send(result)
 

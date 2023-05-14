@@ -15,17 +15,27 @@ import express from 'express'// se trae el modulo express
 
 router.get('/', async (req,res)=>{
     try{
-        const products = await productManagerMongo.getProducts()
-        res.status(200).send({
-            status:'success, get',
-            payload: products,
-        })
-        console.log(products)
+        //const products = await productManagerMongo.getProducts()
+        const {page=1} = req.query
+        const products = await productModel.paginate({},{limit:5, page, lean:true})
+        const { docs, hasPrevPage, hasNextPage,prevPage, nextPage, totalPage } = products
+        res.render('C:\\Users\\anace\\Desktop\\CODERHOUSE BACKEND Practicos\\PracticosEntregas\\preEntregaUno\\src\\views\\layouts\\products',{
+            status: 'success',
+            products: docs,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage
+          });
+        //console.log(products)
     }catch(error) {
         console.log(error);
     }
     
 })
+
+
+
 router.get('/:pid', async (req,res)=>{
     try{
         const{pid} = req.params
