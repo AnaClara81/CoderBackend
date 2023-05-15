@@ -1,9 +1,5 @@
 import { Schema,model } from 'mongoose'
 
-
-
-//import model from 'mongoose'
-
 const collection = 'carts'
 
 const cartSchema = new Schema({

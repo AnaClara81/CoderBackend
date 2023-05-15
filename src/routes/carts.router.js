@@ -1,8 +1,119 @@
 import { Router } from "express";
-import CartManager from "../managerDaos/cartsManager.js";
-
+//import CartManager from "../managerDaos/cartsManager.js";
+import cartModel from "../managerDaos/mongo/model/cart.model.js";
+import { paginateSubDocs } from "mongoose-paginate-v2";
 const routerCar = Router();
-const carts = new CartManager
+
+routerCar.get('/',async(req,res)=>{
+    try{
+    let carts = await cartModel.find({})
+    res.send(carts)
+    
+}catch(error){
+    console.log(error);
+}
+})
+
+
+
+routerCar.get('/:cid', async(req,res)=>{
+    try{
+    let { cid } = req.params
+    let cart = await cartModel.findOne({ _id:cid })
+    if(!cart){
+        return res.status(404).send({status :' error', message:'Not found'})
+    }
+    res.render('carts',{
+        cart
+    })
+}catch(error){
+    console.log(error);
+}
+})
+
+
+
+routerCar.post('/',async(req,res) =>{
+    try{
+    let cart = {
+        products:[]
+        
+    }
+    let respuesta =await cartModel.create({})
+    res.send('Cart')
+}catch(error){
+    console.log(error);
+}
+})
+
+
+routerCar.post('/:cid/product/:pid', async (req, res)=>{
+    try{
+        const { cid, pid } = req.params
+        const {quantity} = req.body
+       /*  const product ={
+            id: pid,
+            quantity
+        } */
+
+        //si existe el producto
+      const respUpdate = await cartModel.findOneAndUpdate(
+        {_id :cid, 'products.product': pid},
+        {$inc: {'products.$.quantity': quantity}},
+        {new: true}
+      )  
+      if(respUpdate){
+    }
+
+    //si no existe el producto
+    await cartModel.findByIdAndUpdate(
+        {_id:cid},
+        {$push : {products: { product:pid, quantity }}},
+        {new:true, upsert:true}
+        )
+        
+        res.send('Insert Product')
+
+    }catch(error){
+        console.log(error);
+    }
+})
+
+
+routerCar.delete('/:cid/product/:pid',async(req,res)=>{
+    try{
+
+        let respuesta = await cartModel.findOneAndUpdate(
+            {_id: cid},
+            {$pull : {products:{product : pid }}},
+            {new: true}
+        )
+        res.send('empty cart')
+    }catch(error){
+        console.log(error);
+    }
+})
+
+routerCar.delete('/cid', async(req,res)=> {
+    try{
+
+        let respuesta = await cartModel.findOneAndUpdate(
+            {_id: cid},
+            {$set : {products:[]}},
+            {new: true}
+        )
+        res.send('empty cart')
+    }catch(error){
+        console.log(error);
+    }
+})
+
+
+
+
+
+//aca empieza usando el cart manager
+/* const carts = new CartManager
 
 routerCar.get ('/', async (req,res)=>{
     try{
@@ -69,7 +180,7 @@ routerCar.delete('/:cid', async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-})
+}) */
 
 /* 
 routerCar.get('/:cid', async (req, res) => {

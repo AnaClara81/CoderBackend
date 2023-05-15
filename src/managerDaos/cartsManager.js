@@ -1,4 +1,4 @@
-import  cartModel   from "./mongo/model/cart.model.js"
+/* import  cartModel   from "./mongo/model/cart.model.js"
 import productModel from "./mongo/model/product.model.js";
 import { Types } from "mongoose";
 class CartManager {
@@ -57,7 +57,7 @@ class CartManager {
 
 
 
-
+ */
 /* import fs from 'fs';
 
 class CartManager {

@@ -82,11 +82,20 @@ DELETE http://localhost:8080/api/usuarios/645a91878aa172e22205c3f6
 GET http://localhost:8080/api/carts
 
 ###CARRITO BY ID
-GET http://localhost:8080/api/carts/645be281b4534a9219bac36c
+GET http://localhost:8080/api/carts/645e15e28d5293ac0886da47
 
 
 ###
-POST  http://localhost:8080/api/carts/
+PUT  http://localhost:8080/api/carts/645e15e28d5293ac0886da47
+Content-Type: application/json
+
+ {
+           "quantity":0,
+            
+}
+
+###
+PUT http://localhost:8080/api/carts/cid/products/pid
 Content-Type: application/json
 
  {
@@ -103,6 +112,7 @@ Content-Type: application/json
 }
 
 
+
 ### DELETE
-DELETE http://localhost:8080/api/carts/645be27eb4534a9219bac368
+DELETE http://localhost:8080/api/carts/645e6824d08dac4c5a5597fb
 
