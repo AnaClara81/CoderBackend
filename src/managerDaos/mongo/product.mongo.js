@@ -51,6 +51,24 @@ class ProductManagerMongo {
             return new Error (error)
            }
     }
-} 
+
+
+    /* async getOrderProduct(){
+          try{
+         // return await productModel.aggregate([
+            console.log("order")
+            return await productModel.paginate({},{limit:5, page})
+            
+         
+         // ])
+
+
+          }catch(error){
+            return new Error (error)
+           }
+
+    } 
+ */
+}
 
 export default  new ProductManagerMongo;

@@ -4,7 +4,7 @@
 GET http://localhost:8080/api/products
 ### GET 
        
-GET http://localhost:8080/api/products/6460df995ccbf883599ed46b
+GET http://localhost:8080/api/products/6460df995ccbf883599ed458
 ### POST 
 POST http://localhost:8080/api/products
 Content-Type: application/json
@@ -82,7 +82,9 @@ DELETE http://localhost:8080/api/usuarios/645a91878aa172e22205c3f6
 GET http://localhost:8080/api/carts
 
 ###CARRITO BY ID
-GET http://localhost:8080/api/carts/645e15e28d5293ac0886da47
+
+
+GET http://localhost:8080/api/carts/645e1a5a70def041a8617864
 
 
 ###

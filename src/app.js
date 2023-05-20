@@ -12,8 +12,6 @@ const __dirname = dirname(__filename);
 import routerServer from './routes/index.js'
 import mongoose from 'mongoose'
 import  connectDb  from './config/configServer.js'
-//import configServer from './config/configServer.js'
-//import bodyParser from 'body-parser'
 import connect from 'mongoose';
 
 
@@ -24,7 +22,7 @@ import socketProducts from './utils/socketProducts.js';
 const app = express()
 
 connectDb();
-//ObjetConfig.connectDb()
+
 const PORT = 8080
 
 
@@ -39,11 +37,8 @@ const io = new Server(httpServer)
 //hbs-------------------------------------------------------------------------------
 import path from 'path';
 import handlebars from 'express-handlebars'
-//import socketProduct from './utils/socketProduct.js'
-
 app.engine('handlebars', handlebars.engine())// inicializamos el motor de plantillas
 app.set('views',path.join( __dirname+'/views')) //adonde va a buscar las carpetas
-
 app.set('view engine', 'handlebars')//para que use el motor de plantilla
 
 
@@ -54,33 +49,11 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 app.use(express.json()) // body-parser
 app.use(express.urlencoded({extended: true}))
 app.use('/static', express.static(__dirname+'/public'))
-//app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
-//console.log(__dirname+'/public');
-
-
-function mid1(req,res,next){
-    req.dato1 ='dato uno'
-    res.send('No tenes permiso para ver los usuarios')
-}
-
-function mid2(req,res,next){
-    req.dato2 = 'dato dos'
-   next()
-}
 
 
 
- /*app.get('/vista', (req,res) =>{
-         let testUser={
-         nombre:'ana',
-         apellido:'eceiza',
-         title:'mercadito',
-
-    }
-    res.render('index',testUser)
- })*/  
+ 
 
 /* app.use('/', viewsRouter)
 app.use('/register', viewsRouter)
@@ -88,7 +61,7 @@ app.use('/register', viewsRouter)
 
 
 //http://localhost:8080 /api/usuarios
-app.use('/api/usuarios',  userRouter)
+//app.use('/api/usuarios',  userRouter)
 
 
 //router de productos
@@ -105,13 +78,6 @@ app.post('/upload', uploader.single('myFile'), (req,res)=>{
         mensaje:'Archivo subido con exito'
     })
 }) 
-
-
- 
-///esta en views.router
-/*app.get('/chat',(req, res)=>{
-res.render('layouts/chat',{})
-})*/  
 
 
 socketChat(io)
@@ -147,12 +113,4 @@ app.use((err, req, res, next) => {
 }) 
 
 
-
-/*const PORT = 8080
-
-app.listen(PORT,()=>{
-    console.log(`Escuchando en el puerto: ${PORT}`)
-})*/
-
-// localhost= 127.0.0.1
 export default __dirname

@@ -15,11 +15,11 @@ import express from 'express'// se trae el modulo express
 
 router.get('/', async (req,res)=>{
     try{
-        //const products = await productManagerMongo.getProducts()
-        const {page=1} = req.query
-        const products = await productModel.paginate({},{limit:5, page, lean:true})
+    //const products = await productManagerMongo.getProducts()
+     const {page=1} = req.query
+     const products = await productModel.paginate({},{limit:5, page, lean:true})
         const { docs, hasPrevPage, hasNextPage,prevPage, nextPage, totalPage } = products
-        res.render('C:\\Users\\anace\\Desktop\\CODERHOUSE BACKEND Practicos\\PracticosEntregas\\preEntregaUno\\src\\views\\layouts\\products',{
+        res.render('products',{
             status: 'success',
             products: docs,
             hasPrevPage,
@@ -27,7 +27,9 @@ router.get('/', async (req,res)=>{
             prevPage,
             nextPage
           });
-        //console.log(products)
+        console.log(products)
+       // const products = await productManagerMongo.getOrderProduct()
+         //res.send({status: 'success', payload: products})
     }catch(error) {
         console.log(error);
     }
@@ -55,7 +57,7 @@ router.get('/:pid', async (req,res)=>{
 router.post('/', async (req,res)=>{
     try {
         const newProduct = req.body
-console.log(newProduct);
+        //console.log(newProduct);
         let result = await productManagerMongo.addProduct(newProduct)
 
 
@@ -63,7 +65,7 @@ console.log(newProduct);
             status: 'success',
             payload: result
         })
-       // console.log(result)
+       console.log(result)
     } catch (error) {
         console.log(error)
     }

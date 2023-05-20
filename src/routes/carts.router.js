@@ -20,12 +20,20 @@ routerCar.get('/:cid', async(req,res)=>{
     try{
     let { cid } = req.params
     let cart = await cartModel.findOne({ _id:cid })
+    
     if(!cart){
-        return res.status(404).send({status :' error', message:'Not found'})
+      return res.status(404).send({status :' error', message:'Not found'})
     }
-    res.render('carts',{
-        cart
-    })
+    const cartObject = cart.toObject(); // Convertir a objeto plano
+    const products = cartObject.products;
+
+    res.render('carts', { cart: cartObject })
+
+    
+    console.log(cart._id)
+    console.log(cart.products[0].quantity)
+    console.log(cart.products[0]._id)
+
 }catch(error){
     console.log(error);
 }
