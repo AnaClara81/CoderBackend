@@ -1,4 +1,5 @@
 import express from 'express'// se trae el modulo express
+import session from 'express-session'
 import cookieParser from 'cookie-parser'  
 import uploader from '../src/utils/multer.utils.js'
 import userRouter from'./routes/users.router.js'
@@ -13,7 +14,7 @@ import routerServer from './routes/index.js'
 import mongoose from 'mongoose'
 import  connectDb  from './config/configServer.js'
 import connect from 'mongoose';
-
+import pruebasRouter  from './routes/pruebas.routes.js'
 
 //----------------------------------------------------------------
 import { Server } from 'socket.io';
@@ -49,7 +50,15 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 app.use(express.json()) // body-parser
 app.use(express.urlencoded({extended: true}))
 app.use('/static', express.static(__dirname+'/public'))
-app.use(cookieParser())
+
+
+//mid de terceros
+app.use(session({
+    secret:'secretCoder',
+    resave:true,
+    saveUninitialized:true
+}))
+app.use(cookieParser('P@l@braS3cr3t0'))
 
 
 
@@ -69,6 +78,10 @@ app.use('/api/products', productRouter)
 
 //router de carrito
 app.use('/api/carts', routerCar ) 
+
+
+app.use('/pruebas', pruebasRouter)
+
 
 app.use(routerServer)
 

@@ -1,0 +1,27 @@
+{{!-- <div>
+    <h1>Inyección de cookies</h1>
+     <form id = "cookieForm" onsubmit="return false"> 
+      <label>Username</label>
+        <input name="username">
+        <br />
+        <label>Email</label>
+        <input name="email">
+        <input type="submit">
+    </form>
+     <button onclick="getCookie()">Ver Cookie</button> 
+</div>
+<script src="/static/js/cookieSetter.js"></script> 
+ --}}
+
+
+<div>
+    <h1>Inyección de cookies</h1>
+     <form id = "cookieForm" action ="/pruebas/session" method="POST"> 
+      <label>Username</label>
+        <input name="username">
+        <br />
+        <label>Password</label>
+        <input name="password">
+        <input type="submit">
+    </form>
+     </div>
