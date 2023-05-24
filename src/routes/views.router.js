@@ -1,6 +1,18 @@
-//const {Router} = require ('express')
 import { Router } from "express";
 const router = Router()
+
+
+router.get('/login',(req,res) => {
+    res.render('login', {
+        style:'index.css'
+    })
+})
+
+router.get('/register',(req,res) =>{
+    res.render('registerForm',{
+        style:'index.css'
+    })
+})
 
 
 let food =[

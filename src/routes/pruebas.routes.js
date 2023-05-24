@@ -40,41 +40,10 @@ router.post('/setcookieuser', (req,res)=>{
 })
 
 
-////sesiones
- router.get('/session',(req,res)=>{
-     if(req.session.counter){
-      req.session.counter ++
-      res.send(`se ha visitado el sitio ${req.session.counter} veces.`)
-     }else{
-          req.session.counter =1
-          res.send('Bienvenido')
-     }
- })
 
-router.get('/privada',auth,(req,res) =>{
-     res.send ('Todo lo que esta aca solo lo puede ver un admin logueado')
-})
 
-router.post('/session',(req,res)=>{
-     const{username,password} =req.body
-     if(username !== 'ana' || password  !== 'ana123' ){
-      res.send('login failed')
-     }
-          req.session.user = username
-          req.session.admin = false
-       console.log(req.session)
-          res.send('Login succes')
-     
- })
 
- router.get('/logout', (req, res)=>{
-     req.session.destroy (err =>{
-          if(err){
-              return res.send({status:'error, error:err'})
-          }
-          res.send('logout ok')
-     })
- })
+ 
 
 
 

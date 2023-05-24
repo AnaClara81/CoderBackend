@@ -3,12 +3,13 @@ import UserManagerMongo from '../managerDaos/mongo/user.mongo.js'
 import userModel  from '../managerDaos/mongo/model/user.model.js'
 import userManager from '../managerDaos/userManager.js'
 import mongoosePaginate from 'mongoose-paginate-v2'
+import auth from '../middlewares/autenticacion.middlewares.js'
 
 const router = Router()
 
 
 
-router.get('/', async (req,res)=>{
+router.get('/',auth, async (req,res)=>{
     try{
         //const userManager = new UserManagerMongo()
         //const users = await userManager.getUsers()
@@ -17,7 +18,7 @@ router.get('/', async (req,res)=>{
         const { docs, hasPrevPage, hasNextPage,prevPage, nextPage, totalPage } = users
         //console.log(users)
         //console.log(users[0]._id.toString())
-        res.render('C:\\Users\\anace\\Desktop\\CODERHOUSE BACKEND Practicos\\PracticosEntregas\\preEntregaUno\\src\\views\\layouts\\users', {
+        res.render('users', {
             status: 'success',
             users: docs,
             hasPrevPage,

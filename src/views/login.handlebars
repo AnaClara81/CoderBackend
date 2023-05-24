@@ -14,11 +14,24 @@
  --}}
 
 
-<div>
+{{!-- <div>
     <h1>Inyección de cookies</h1>
      <form id = "cookieForm" action ="/pruebas/session" method="POST"> 
       <label>Username</label>
         <input name="username">
+        <br />
+        <label>Password</label>
+        <input name="password">
+        <input type="submit">
+    </form>
+     </div> --}}
+
+
+     <div>
+    <h1>Inyección de cookies</h1>
+     <form id = "cookieForm" action ="/api/session/login" method="POST"> 
+      <label>Email</label>
+        <input name="email">
         <br />
         <label>Password</label>
         <input name="password">

@@ -15,7 +15,10 @@ import mongoose from 'mongoose'
 import  connectDb  from './config/configServer.js'
 import connect from 'mongoose';
 import pruebasRouter  from './routes/pruebas.routes.js'
-
+import sessionRouter from './routes/session.router.js'
+//-------------------------------------------------------
+import  FileStore  from 'session-file-store'
+import create from 'connect-mongo'
 //----------------------------------------------------------------
 import { Server } from 'socket.io';
 import socketChat from './utils/socketChat.js';
@@ -50,22 +53,47 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 app.use(express.json()) // body-parser
 app.use(express.urlencoded({extended: true}))
 app.use('/static', express.static(__dirname+'/public'))
-
-
-//mid de terceros
-app.use(session({
-    secret:'secretCoder',
-    resave:true,
-    saveUninitialized:true
-}))
 app.use(cookieParser('P@l@braS3cr3t0'))
 
 
+//mid de terceros 1
+/* app.use(session({
+    secret:'secretCoder',
+    resave:true,
+    saveUninitialized:true
+})) */
+/* 
+const fileStore = FileStore(session)
 
- 
+app.use(session({
+    store: new fileStore ({
+        ttl: 100000*60,//tiempo de duracion
+         path:'./session',
+         retries: 0
+    }),
+    secret:'secretCoder',
+    resave: true,
+    saveUninitialized:true
+}))  */
 
-/* app.use('/', viewsRouter)
-app.use('/register', viewsRouter)
+
+//mongo
+app.use(session({
+    store: new create ({
+       mongoUrl:'mongodb://localhost:27017/comision39750',
+       mongoOptions:{
+          useNewUrlParser: true,
+          useUnifiedTopology:true
+       },
+        ttl:10
+    }),
+    secret:'secretCoder',
+    resave: false,
+    saveUninitialized:false
+})) 
+
+//app.use('/register', viewsRouter)
+ //app.use('/login', viewsRouter)
 //app.use('/chat', viewsRouter)*/
 
 
@@ -79,10 +107,11 @@ app.use('/api/products', productRouter)
 //router de carrito
 app.use('/api/carts', routerCar ) 
 
-
+app.use('/api/usuarios', userRouter) 
 app.use('/pruebas', pruebasRouter)
 
-
+app.use('/api/session',sessionRouter )
+app.use('/api/session',viewsRouter )
 app.use(routerServer)
 
 app.post('/upload', uploader.single('myFile'), (req,res)=>{

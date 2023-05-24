@@ -6,7 +6,11 @@ import mongoosePaginate from 'mongoose-paginate-v2'
 const collection = 'usuarios'
 
 const userSchema = new Schema({
+
+    username: String,
+
     first_name: String,
+    
     last_name:{
         type:String,
         index: true
@@ -17,7 +21,8 @@ const userSchema = new Schema({
         unique:true
  
     },
-    gender:String
+    password: String
+    //gender:String
 
 })
 
