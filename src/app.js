@@ -16,6 +16,8 @@ import  connectDb  from './config/configServer.js'
 import connect from 'mongoose';
 import pruebasRouter  from './routes/pruebas.routes.js'
 import sessionRouter from './routes/session.router.js'
+
+
 //-------------------------------------------------------
 import  FileStore  from 'session-file-store'
 import create from 'connect-mongo'
@@ -45,10 +47,10 @@ app.engine('handlebars', handlebars.engine())// inicializamos el motor de planti
 app.set('views',path.join( __dirname+'/views')) //adonde va a buscar las carpetas
 app.set('view engine', 'handlebars')//para que use el motor de plantilla
 
-
-
 //hbs---------------------------------------------------------------------------------
-
+//passport
+import initPassport from './config/passport.config.js'
+import passport from 'passport'
 
 app.use(express.json()) // body-parser
 app.use(express.urlencoded({extended: true}))
@@ -91,6 +93,11 @@ app.use(session({
     resave: false,
     saveUninitialized:false
 })) 
+
+initPassport()
+passport.use(passport.initialize())
+passport.use(passport.session())
+
 
 //app.use('/register', viewsRouter)
  //app.use('/login', viewsRouter)
