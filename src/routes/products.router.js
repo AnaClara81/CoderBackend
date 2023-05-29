@@ -15,11 +15,15 @@ import express from 'express'// se trae el modulo express
 
 router.get('/', async (req,res)=>{
     try{
+        const nombreUsuario = req.query.nombreUsuario;
+        const rol = req.query.rol;
     //const products = await productManagerMongo.getProducts()
      const {page=1} = req.query
      const products = await productModel.paginate({},{limit:5, page, lean:true})
         const { docs, hasPrevPage, hasNextPage,prevPage, nextPage, totalPage } = products
         res.render('products',{
+            nombreUsuario: nombreUsuario,
+            rol: rol,
             status: 'success',
             products: docs,
             hasPrevPage,

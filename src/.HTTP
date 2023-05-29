@@ -126,10 +126,10 @@ POST http://localhost:8080/api/session/register HTTP/1.1
 Content-Type: application/json
 
 {
-       "first_name":"lau",
-       "last_name":"perez",
-       "email":"lau@gmail.com",
-       "password":"lau123"
+       "first_name":"pedro",
+       "last_name":"campo",
+       "email":"pedro@gmail.com",
+       "password":"pedro123"
 }
 
 
@@ -138,6 +138,6 @@ POST http://localhost:8080/api/session/login HTTP/1.1
 Content-Type: application/json
 
 {
-      "email":"lau@gmail.com",
-       "password":"lau123"
+      "email":"pedro@gmail.com",
+       "password":"pedro123"
 }

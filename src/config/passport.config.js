@@ -13,7 +13,7 @@ const initPassport = () => {
         usernameField: 'email'
 
     }, async (req, username, password, done)=>{
-         // const {first_name, last_name} = req.body
+         const {first_name, last_name} = req.body
           try {
              let userDb = await userModel.findOne({ email:username})
              if(userDb) return done(null, false)

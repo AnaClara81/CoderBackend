@@ -74,10 +74,15 @@ router.post('/login', passport.authenticate('login', {failureRedirect:'/faillogi
     req.session.user ={
         first_name: req.user.first_name,
         last_name: req.user.last_name,
-        email: req.user.email
+        email: req.user.email,
+        role:req.user.role
     }
-    res.send ({status:'succes', message:'User registered'})
+    console.log(req.user.first_name);
+    console.log(req.user.role)
+    res.redirect(`/api/products?nombreUsuario=${req.user.first_name}&rol=${req.user.role}`);
+
 })
+//message:'User registered'
 router.get ('/faillogin', async (req, res)=>{
     console.log('Fallo estrategia')
     res.send({status:'error', error:'fallo autenticacion'})
