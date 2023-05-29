@@ -70,17 +70,30 @@ let {resultUser} = await userModel.create(newUser)
 }) */
 //login
 router.post('/login', passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
+    try{
+        const {email,password} = req.body
+   
     if(!req.user) return res.status(401).send({status:'error', message:'invalid credencial'})
     req.session.user ={
         first_name: req.user.first_name,
         last_name: req.user.last_name,
         email: req.user.email,
-        role:req.user.role
+        role: req.user.role
     }
+    if(email == "admin@admin.com"){
+        req.session.user.role ="admin" 
+    }else{
+        req.session.user.role ="user"
+    }
+    
+    console.log(req.session.user);
     console.log(req.user.first_name);
-    console.log(req.user.role)
-    res.redirect(`/api/products?nombreUsuario=${req.user.first_name}&rol=${req.user.role}`);
+    console.log(req.session.user.role)
+    res.redirect(`/api/products`);
 
+}catch(error){
+    console.log((error));
+}
 })
 //message:'User registered'
 router.get ('/faillogin', async (req, res)=>{

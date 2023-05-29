@@ -22,10 +22,11 @@ const userSchema = new Schema({
  
     },
     password: String,
+
     role:{
         type:String,
        enum:['user','admin'],
-       dafault:'user'
+       default:'user'
     }
     //gender:String
 
