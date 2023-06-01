@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-const  JWT_PRIVATE_KEY = 'palabraJwtSecreto'
+export const  JWT_PRIVATE_KEY = 'palabraJwtSecreto';
 
 //usuario sin datos sensibles  generar el token
 const generateToken =(user) => {

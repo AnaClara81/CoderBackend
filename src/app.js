@@ -49,10 +49,11 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 
 //hbs---------------------------------------------------------------------------------
 //passport
-import { initPassport, initPassportGithub } from './config/passport.config.js'
-//import {} from './config/passport.config.js'
-
+//import { initPassport, initPassportGithub } from './config/passport.config.js'
 import passport from 'passport'
+import initPassport from './passport.jwt/passport.config.js'
+initPassport()
+
 
 app.use(express.json()) // body-parser
 app.use(express.urlencoded({extended: true}))
@@ -82,7 +83,7 @@ app.use(session({
 
 
 //mongo
-app.use(session({
+/* app.use(session({
     store: new create ({
        mongoUrl:'mongodb://localhost:27017/comision39750',
        mongoOptions:{
@@ -97,9 +98,9 @@ app.use(session({
 })) 
 
 initPassport()
-initPassportGithub()
+initPassportGithub() */
 passport.use(passport.initialize())
-passport.use(passport.session())
+//passport.use(passport.session())
 
 
 //app.use('/register', viewsRouter)

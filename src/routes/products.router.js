@@ -4,6 +4,8 @@ import productManagerMongo from '../managerDaos/mongo/product.mongo.js'
 //import socketProducts from '../utils/socketProducts'
 import productManager from '../managerDaos/productManager.js'
 import productModel from '../managerDaos/mongo/model/product.model.js'
+import { authToken } from '../utils/jwt.js'
+import passport from 'passport'
 const router = Router()
 
  
@@ -13,7 +15,7 @@ const router = Router()
 import express from 'express'// se trae el modulo express
 
 
-router.get('/', async (req,res)=>{
+router.get('/',passport.authenticate('jwt', {session:false}), async (req,res)=>{
     try{
         const nombreUsuario = req.session.user.first_name
         const role =  req.session.user.role

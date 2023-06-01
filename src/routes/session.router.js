@@ -7,7 +7,8 @@ import {createHash} from '../utils/bcryptHash.js'
 import {isValidPassword} from '../utils/bcryptHash.js'
 import passport from 'passport';
 import {generateToken }from '../utils/jwt.js'
-
+import passportCall from '../passport.jwt/passportCall.js'
+import authorization from '../passport.jwt/authorizacionJwtRole.js'
  ////sesiones
 
 
@@ -134,16 +135,30 @@ router.post('/login',async(req,res)=>{
  const acces_token = generateToken({
         first_name:'pedro',
         last_name:'campo', 
-        email:'pedro@gmail.com', 
+        email:'pedro@gmail.com',
+        role:'user'
     })
-    res.send({
+    res.cookie('coderCookieToken', acces_token,{
+        maxAge: 60*60*100,
+        httpOnly:true
+    })
+    .send({
         status:'success',
         message:'login success',
-        acces_token
+        
         
     })
     
 })
+
+// si viene corrupto o no viene
+
+// validar el role
+router.get ('/current', passportCall('jwt'),authorization('user'),(req,res)=>{
+    res.send(req.user)
+})
+
+
 router.post('/register', async (req, res) => {
     try {
         const {username,first_name, last_name, email, password} = req.body 

@@ -132,3 +132,7 @@ Content-Type: application/json
       "email":"pedro@gmail.com",
        "password":"pedro123"
 }
+
+###
+GET http://localhost:8080/api/session/current HTTP/1.1
+#Content-Type: application/json
