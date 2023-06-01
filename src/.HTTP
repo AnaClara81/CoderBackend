@@ -2,24 +2,15 @@
 
 ### GET 
 GET http://localhost:8080/api/products
+Content-Type: application/json
 ### GET 
        
 GET http://localhost:8080/api/products/6460df995ccbf883599ed458
 ### POST 
 POST http://localhost:8080/api/products
 Content-Type: application/json
-
- {
-              "title": "Dulce de membrillo",
-              "description": "Con agar agar",
-              "thumbnail":"Sin imagen",
-              "price":750,
-              "stock":25,
-              "code":"024",
-              "status":true,
-              "category":"Dulces en barra"
-       }  
-
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImZpcnN0X25hbWUiOiJwZWRybyIsImxhc3RfbmFtZSI6ImNhbXBvIiwiZW1haWwiOiJwZWRyb0BnbWFpbC5jb20ifSwiaWF0IjoxNjg1NTU5NTgzLCJleHAiOjE2ODU2NDU5ODN9.KK2A-7g3oXQQBjZGqoWRtNUDgwQtsy8ZipnTP3SFOZ4
+ 
 
 
 ### PUT 

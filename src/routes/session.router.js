@@ -6,6 +6,7 @@ import bcrypt from '../utils/bcryptHash.js'
 import {createHash} from '../utils/bcryptHash.js'
 import {isValidPassword} from '../utils/bcryptHash.js'
 import passport from 'passport';
+import {generateToken }from '../utils/jwt.js'
 
  ////sesiones
 
@@ -68,8 +69,11 @@ let {resultUser} = await userModel.create(newUser)
     })
    //console.log(newUser);
 }) */
+
+
+
 //login
-router.post('/login', passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
+/* router.post('/login', passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
     try{
         const {email,password} = req.body
    
@@ -95,27 +99,72 @@ router.post('/login', passport.authenticate('login', {failureRedirect:'/faillogi
     console.log((error));
 }
 })
-//message:'User registered'
+
+ */
+
+
+
+//success redirect
+/* router.post ('/register', passport.authenticate('register',{failureRedirect:'/failregister'}), async(req,res)=>{
+      res.send({ status:'succes', message:'User registered'})
+}) */
+
+
 router.get ('/faillogin', async (req, res)=>{
     console.log('Fallo estrategia')
     res.send({status:'error', error:'fallo autenticacion'})
     })
 
 
-
-//success redirect
-router.post ('/register', passport.authenticate('register',{failureRedirect:'/failregister'}), async(req,res)=>{
-      res.send({ status:'succes', message:'User registered'})
-})
-
 router.get ('/failregister', async (req, res)=>{
      console.log('Fallo estrategia')
      res.send({status:'error', error:'fallo autenticacion'})
      })
 
+///github
+router.get('/github', passport.authenticate('github',{scope: ['user:email']}),()=>{})
+router.get('/githubcallback', passport.authenticate('github',{failureRedirect:'api/session/login'}),async (req,res)=>{
+    req.session.user = req.user
+    res.redirect('/api/products')
+})
 
+router.post('/login',async(req,res)=>{
+    const{email,password} = req.body
+   
+ const acces_token = generateToken({
+        first_name:'pedro',
+        last_name:'campo', 
+        email:'pedro@gmail.com', 
+    })
+    res.send({
+        status:'success',
+        message:'login success',
+        acces_token
+        
+    })
+    
+})
+router.post('/register', async (req, res) => {
+    try {
+        const {username,first_name, last_name, email, password} = req.body 
 
-
+        let token = generateToken({
+            first_name: 'pedro',
+            last_name: 'campo',
+            email: 'pedro@gmail.com'
+        })
+    
+    
+        res.status(200).send({
+            status: 'success',
+            message: 'Usuario creado correctamente',
+            token
+        })
+    } catch (error) {
+        console.log(error)
+    }
+   
+})
 
 
 

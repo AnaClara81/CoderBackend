@@ -49,7 +49,9 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 
 //hbs---------------------------------------------------------------------------------
 //passport
-import initPassport from './config/passport.config.js'
+import { initPassport, initPassportGithub } from './config/passport.config.js'
+//import {} from './config/passport.config.js'
+
 import passport from 'passport'
 
 app.use(express.json()) // body-parser
@@ -95,6 +97,7 @@ app.use(session({
 })) 
 
 initPassport()
+initPassportGithub()
 passport.use(passport.initialize())
 passport.use(passport.session())
 
