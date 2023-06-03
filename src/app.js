@@ -49,28 +49,29 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 
 //hbs---------------------------------------------------------------------------------
 //passport
-//import { initPassport, initPassportGithub } from './config/passport.config.js'
+import { initPassport, initPassportGithub } from './config/passport.config.js'
 import passport from 'passport'
-import initPassport from './passport.jwt/passport.config.js'
+import jwt  from 'jsonwebtoken'
+//import initPassport from './passport.jwt/passport.config.js'
 initPassport()
-
+initPassportGithub()
 
 app.use(express.json()) // body-parser
 app.use(express.urlencoded({extended: true}))
 app.use('/static', express.static(__dirname+'/public'))
 app.use(cookieParser('P@l@braS3cr3t0'))
 
+const fileStore = FileStore(session)
 
 //mid de terceros 1
-/* app.use(session({
+  app.use(session({
     secret:'secretCoder',
     resave:true,
     saveUninitialized:true
-})) */
-/* 
-const fileStore = FileStore(session)
+})) 
 
-app.use(session({
+
+/*app.use(session({
     store: new fileStore ({
         ttl: 100000*60,//tiempo de duracion
          path:'./session',
@@ -79,11 +80,11 @@ app.use(session({
     secret:'secretCoder',
     resave: true,
     saveUninitialized:true
-}))  */
-
+}))  
+ */
 
 //mongo
-/* app.use(session({
+ app.use(session({
     store: new create ({
        mongoUrl:'mongodb://localhost:27017/comision39750',
        mongoOptions:{
@@ -98,9 +99,9 @@ app.use(session({
 })) 
 
 initPassport()
-initPassportGithub() */
+initPassportGithub() 
 passport.use(passport.initialize())
-//passport.use(passport.session())
+passport.use(passport.session())
 
 
 //app.use('/register', viewsRouter)

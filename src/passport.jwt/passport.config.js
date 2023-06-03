@@ -1,4 +1,4 @@
-import passport from "passport";
+ import passport from "passport";
 import jwt from "passport-jwt";
 import { JWT_PRIVATE_KEY } from '../utils/jwt.js'
 
@@ -9,13 +9,13 @@ const ExtractJWT = jwt.ExtractJwt
 const cookieExtractor = req =>{
     let token = null
     if(req && req.cookies){
-        token= req.cookies['coderCookieToken']
+        token = req.cookies['coderCookieToken']
     }
     return token
 }
 const configStrategy ={
     jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-    secretOrKey: JWT_PRIVATE_KEY
+    secretOrKey: JWT_PRIVATE_KEY 
 }
     const initPassport =()=>{
         passport.use('jwt', new JWTStrategy(configStrategy, async(jwt_paload,done)=>{
@@ -32,4 +32,4 @@ const configStrategy ={
 
 
 
-export default initPassport
+export default initPassport  

@@ -6,9 +6,9 @@ import bcrypt from '../utils/bcryptHash.js'
 import {createHash} from '../utils/bcryptHash.js'
 import {isValidPassword} from '../utils/bcryptHash.js'
 import passport from 'passport';
-import {generateToken }from '../utils/jwt.js'
-import passportCall from '../passport.jwt/passportCall.js'
-import authorization from '../passport.jwt/authorizacionJwtRole.js'
+import {generateToken } from '../utils/jwt.js'
+//import passportCall from '../passport.jwt/passportCall.js'
+//import authorization from '../passport.jwt/authorizacionJwtRole.js'
  ////sesiones
 
 
@@ -74,7 +74,7 @@ let {resultUser} = await userModel.create(newUser)
 
 
 //login
-/* router.post('/login', passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
+/*  router.post('/login', passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
     try{
         const {email,password} = req.body
    
@@ -85,7 +85,7 @@ let {resultUser} = await userModel.create(newUser)
         email: req.user.email,
         role: req.user.role
     }
-    if(email == "admin@admin.com"){
+    if(email === "admin@admin.com"){
         req.session.user.role ="admin" 
     }else{
         req.session.user.role ="user"
@@ -101,14 +101,14 @@ let {resultUser} = await userModel.create(newUser)
 }
 })
 
+ 
  */
 
 
-
 //success redirect
-/* router.post ('/register', passport.authenticate('register',{failureRedirect:'/failregister'}), async(req,res)=>{
+router.post ('/register', passport.authenticate('register',{failureRedirect:'/failregister'}), async(req,res)=>{
       res.send({ status:'succes', message:'User registered'})
-}) */
+}) 
 
 
 router.get ('/faillogin', async (req, res)=>{
@@ -122,12 +122,15 @@ router.get ('/failregister', async (req, res)=>{
      res.send({status:'error', error:'fallo autenticacion'})
      })
 
-///github
-router.get('/github', passport.authenticate('github',{scope: ['user:email']}),()=>{})
-router.get('/githubcallback', passport.authenticate('github',{failureRedirect:'api/session/login'}),async (req,res)=>{
+/// github
+
+ router.get('/github', passport.authenticate('github', {scope: ['user:email']}), ()=>{})
+ router.get('/githubcallback', passport.authenticate('github', {failureRedirect: 'api/session/login'}), async (req, res)=>{
     req.session.user = req.user
     res.redirect('/api/products')
-})
+ })
+
+
 
 router.post('/login',async(req,res)=>{
     const{email,password} = req.body
@@ -137,49 +140,51 @@ router.post('/login',async(req,res)=>{
         last_name:'campo', 
         email:'pedro@gmail.com',
         role:'user'
-    })
+     })
     res.cookie('coderCookieToken', acces_token,{
-        maxAge: 60*60*100,
-        httpOnly:true
-    })
+       maxAge: 60*60*100,
+       httpOnly:true
+     })
     .send({
         status:'success',
         message:'login success',
-        
-        
-    })
-    
-})
-
-// si viene corrupto o no viene
-
-// validar el role
-router.get ('/current', passportCall('jwt'),authorization('user'),(req,res)=>{
-    res.send(req.user)
-})
-
-
-router.post('/register', async (req, res) => {
-    try {
-        const {username,first_name, last_name, email, password} = req.body 
-
-        let token = generateToken({
-            first_name: 'pedro',
-            last_name: 'campo',
-            email: 'pedro@gmail.com'
         })
     
+ })
+ //router.get ('/current', passport.authenticate('jwt',{session:false}),(req,res)=>{
+       // res.send(req.user)
+    // })
+
+
+// // si viene corrupto o no viene
+
+// // validar el role
+// router.get ('/current', passportCall('jwt'),authorization('user'),(req,res)=>{
+//     res.send(req.user)
+// })
+
+
+// router.post('/register', async (req, res) => {
+//     try {
+//         const {username,first_name, last_name, email, password} = req.body 
+
+//         let token = generateToken({
+//             first_name: 'pedro',
+//             last_name: 'campo',
+//             email: 'pedro@gmail.com'
+//         })
     
-        res.status(200).send({
-            status: 'success',
-            message: 'Usuario creado correctamente',
-            token
-        })
-    } catch (error) {
-        console.log(error)
-    }
+    
+//         res.status(200).send({
+//             status: 'success',
+//             message: 'Usuario creado correctamente',
+//             token
+//         })
+//     } catch (error) {
+//         console.log(error)
+//     }
    
-})
+// })
 
 
 
