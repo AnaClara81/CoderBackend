@@ -13,6 +13,7 @@ const LocalStrategy = local.Strategy
 
 const initPassport = () => {  //passport local
     //configurar el registro
+    
     passport.use('register', new LocalStrategy({
         passReqToCallback: true,
         usernameField: 'email'
@@ -36,7 +37,14 @@ const initPassport = () => {  //passport local
             return done('Error al obtener el usuario'+ error)
           }
     }))
-
+    passport.serializeUser((user,done)=>{
+        done(null, user._id)
+    })
+    passport.deserializeUser(async (id,done)=>{
+        let user =await userModel.findOne({_id :id})
+       done(null, user)
+    }) 
+}
 
 /// passport local
     passport.use('login', new LocalStrategy({
@@ -54,65 +62,45 @@ const initPassport = () => {  //passport local
             return done (error)
         }
     }))
-}
 
-
-const initPassportGithub = ()=>{
-    passport.use('github', new GithubStrategy({
-        clientID: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: process.env.GITHUB_CALLBACK_URL
-    }, async (accessToken, refreshToken, profile, done)=>{
-        console.log('Profile', profile)
-        try {
-            let user = await userModel.findOne({email: profile._json.email})
-            // if(user)
-            if(!user){
-                let newUser = {
-                    firts_name: profile.username,
-                    last_name: profile.username,
-                    email: 'fede@gmail.com',
-                    password: ''
+   
+    const initPassportGithub = ()=>{
+        passport.use('github', new GithubStrategy({
+            clientID: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+            callbackURL: process.env.GITHUB_CALLBACK_URL
+        }, async (accessToken, refreshToken, profile, done)=>{
+            console.log('Profile', profile)
+            try {
+                let user = await userModel.findOne({email: profile._json.email})
+                // if(user)
+                if(!user){
+                    let newUser = {
+                        firts_name: profile.username,
+                        last_name: profile.username,
+                        email: profile._json.email,
+                        password: ''
+                    }
+                    let result = await userModel.create(newUser)
+                    return done(null, result)
                 }
-                let result = await userModel.create(newUser)
-                return done(null, result)
+                return done(null, user)
+            } catch (error) {
+                console.log(error)
             }
-            return done(null, user)
-        } catch (error) {
-            console.log(error)
-        }
-    }))
-    passport.serializeUser((user, done)=>{
-        done(null, user._id)
-    })
-
-    passport.deserializeUser(async (id, done)=>{
-        let user = await userModel.findOne({_id:id})
-        done(null, user)
-    })
-
-}
-
-
-
-
-
- 
-
-
+        }))
+        passport.serializeUser((user, done)=>{
+            done(null, user._id)
+        })
     
+        passport.deserializeUser(async (id, done)=>{
+            let user = await userModel.findOne({_id:id})
+            done(null, user)
+        })
     
-//solo para passport local  y github
-    passport.serializeUser((user,done)=>{
-        done(null, user._id)
-    })
-    passport.deserializeUser(async (id,done)=>{
-        let user =await userModel.findOne({_id :id})
-        done(null, user)
-    }) 
-  
+    }
+    
 
-    
 
 export { initPassport, initPassportGithub }
 

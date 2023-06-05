@@ -6,30 +6,27 @@ import bcrypt from '../utils/bcryptHash.js'
 import {createHash} from '../utils/bcryptHash.js'
 import {isValidPassword} from '../utils/bcryptHash.js'
 import passport from 'passport';
-import {generateToken } from '../utils/jwt.js'
+import {generateToken,authToken} from '../utils/jwt.js'
 //import passportCall from '../passport.jwt/passportCall.js'
 //import authorization from '../passport.jwt/authorizacionJwtRole.js'
  ////sesiones
 
 
-/* router.post('/login',async(req,res)=>{
+ /* router.post('/login',async(req,res)=>{
     const{email,password} = req.body
     //validar email y  password 
 
     //vamos a tner una funcion para validar el password
-    const userDb = await userModel.findOne({email,password})
+    const userDb = await userModel.findOne({email})
 
     if(!userDb) return res.send({status:'error', message:'No existe ese usuario'})
    
     //validar password
-     if(isValidPassword(password,userDb)) return res.status(401).send({
+     if(!isValidPassword(password, userDb)) return res.status(401).send({
         status:'error',
         message:'El usuario o la contraseña no son correctos'
      }) 
-
-
-
-    req.session.user ={
+     req.session.user ={
         first_name:userDb.first_name,
         last_name:userDb.last_name, 
         email:userDb.email, 
@@ -41,8 +38,7 @@ import {generateToken } from '../utils/jwt.js'
         session :req.session.user
     })
     
-})*/
-
+}) */
 
 
 /* router.post('/register',async (req,res)=>{
@@ -68,13 +64,13 @@ let {resultUser} = await userModel.create(newUser)
         status:'succes',
         message:'Usuario creado correctamente',
     })
-   //console.log(newUser);
-}) */
+   console.log(newUser);
+})  */
 
 
 
 //login
-/*  router.post('/login', passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
+/*    router.post('/login',passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
     try{
         const {email,password} = req.body
    
@@ -100,9 +96,9 @@ let {resultUser} = await userModel.create(newUser)
     console.log((error));
 }
 })
-
- 
  */
+ 
+
 
 
 //success redirect
@@ -124,15 +120,17 @@ router.get ('/failregister', async (req, res)=>{
 
 /// github
 
- router.get('/github', passport.authenticate('github', {scope: ['user:email']}), ()=>{})
- router.get('/githubcallback', passport.authenticate('github', {failureRedirect: 'api/session/login'}), async (req, res)=>{
+router.get('/github', passport.authenticate('github', {scope: ['user:email']}), ()=>{})
+ router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/api/session/login'}), async (req, res)=>{
     req.session.user = req.user
     res.redirect('/api/products')
  })
 
+ 
 
 
-router.post('/login',async(req,res)=>{
+
+/* router.post('/login',async(req,res)=>{
     const{email,password} = req.body
    
  const acces_token = generateToken({
@@ -150,7 +148,7 @@ router.post('/login',async(req,res)=>{
         message:'login success',
         })
     
- })
+ }) */
  //router.get ('/current', passport.authenticate('jwt',{session:false}),(req,res)=>{
        // res.send(req.user)
     // })
@@ -164,30 +162,30 @@ router.post('/login',async(req,res)=>{
 // })
 
 
-// router.post('/register', async (req, res) => {
-//     try {
-//         const {username,first_name, last_name, email, password} = req.body 
+router.post('/register', async (req, res) => {   
+      try {
+        const {username,first_name, last_name, email, password} = req.body 
 
-//         let token = generateToken({
-//             first_name: 'pedro',
-//             last_name: 'campo',
-//             email: 'pedro@gmail.com'
-//         })
+         let token = generateToken({
+            first_name: 'pedro',
+             last_name: 'campo',
+             email: 'pedro@gmail.com'
+        })
     
     
-//         res.status(200).send({
-//             status: 'success',
-//             message: 'Usuario creado correctamente',
-//             token
-//         })
-//     } catch (error) {
-//         console.log(error)
-//     }
+        res.status(200).send({
+             status: 'success',
+            message: 'Usuario creado correctamente',
+             token
+         })
+     } catch (error) {
+         console.log(error)
+    }
    
-// })
+ })
 
 
-
+ 
 
 router.get('/logout', (req, res)=>{
     req.session.destroy (err =>{

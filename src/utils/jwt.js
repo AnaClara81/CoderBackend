@@ -9,7 +9,7 @@ const generateToken =(user) => {
 //validar el token
 const authToken = (req, res, next) =>{
     const authHeader = req.headers['authorization']
-
+ 
     if(!authHeader){
         return res.status(401).send({status:'error', error:'no auntenticado'})
     }

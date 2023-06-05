@@ -1,4 +1,4 @@
- import passport from "passport";
+/*  import passport from "passport";
 import jwt from "passport-jwt";
 import { JWT_PRIVATE_KEY } from '../utils/jwt.js'
 
@@ -32,4 +32,4 @@ const configStrategy ={
 
 
 
-export default initPassport  
+export default initPassport   */

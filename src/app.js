@@ -27,15 +27,12 @@ import socketChat from './utils/socketChat.js';
 import socketProducts from './utils/socketProducts.js';
 const app = express()
 
-connectDb();
-
 const PORT = 8080
-
-
 const httpServer = app.listen(PORT,()=>{
     console.log(`Escuchando en el puerto: ${PORT}`)
 })
 
+connectDb();
 const io = new Server(httpServer)
 
 //---------------------------------------------------
@@ -49,26 +46,25 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 
 //hbs---------------------------------------------------------------------------------
 //passport
-import { initPassport, initPassportGithub } from './config/passport.config.js'
+import { initPassport, initPassportGithub} from './config/passport.config.js'
 import passport from 'passport'
+import passportCall from 'passport'
 import jwt  from 'jsonwebtoken'
-//import initPassport from './passport.jwt/passport.config.js'
-initPassport()
-initPassportGithub()
+
 
 app.use(express.json()) // body-parser
 app.use(express.urlencoded({extended: true}))
 app.use('/static', express.static(__dirname+'/public'))
 app.use(cookieParser('P@l@braS3cr3t0'))
 
-const fileStore = FileStore(session)
+//const fileStore = FileStore(session)
 
 //mid de terceros 1
-  app.use(session({
+   app.use(session({
     secret:'secretCoder',
     resave:true,
     saveUninitialized:true
-})) 
+}))  
 
 
 /*app.use(session({
@@ -80,19 +76,19 @@ const fileStore = FileStore(session)
     secret:'secretCoder',
     resave: true,
     saveUninitialized:true
-}))  
- */
+}))  */
+ 
 
-//mongo
+//mongo  no va con jwt
  app.use(session({
-    store: new create ({
+     store: new create ({
        mongoUrl:'mongodb://localhost:27017/comision39750',
        mongoOptions:{
           useNewUrlParser: true,
           useUnifiedTopology:true
        },
         ttl:10
-    }),
+    }), 
     secret:'secretCoder',
     resave: false,
     saveUninitialized:false
@@ -138,12 +134,8 @@ socketChat(io)
 socketProducts(io)
    
 /* socket.emit('evento-para-socket-individual','Este mensaje lo va a recibir un cliente socket')
-    
-   socket.broadcast.emit('evt-p-todo-menos-el-socket-actual','Evento que veran todos los sockets menos el actual')
-    
-   socketServer.emit('evt-para-todos','este mensaje lo reciben todos los socket conectados')
-    
-    
+    socket.broadcast.emit('evt-p-todo-menos-el-socket-actual','Evento que veran todos los sockets menos el actual')
+    socketServer.emit('evt-para-todos','este mensaje lo reciben todos los socket conectados')
     let logs = []
     socket.on("message1", data =>{
         socketServer.emit('log',data);
@@ -152,10 +144,7 @@ socketProducts(io)
     socket.on("message2", data =>{
         logs.push({socketid:socket.id,message:data})
         socketServer.emit('log',{logs});
-        
-    }) */
-
-
+        }) */
 ///socketProduct(io) // ERROR socketProduct is not defined
 
 
