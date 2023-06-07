@@ -90,8 +90,8 @@ app.use(cookieParser('P@l@braS3cr3t0'))
         ttl:10
     }), 
     secret:'secretCoder',
-    resave: false,
-    saveUninitialized:false
+    resave: true,
+    saveUninitialized:true
 })) 
 
 initPassport()

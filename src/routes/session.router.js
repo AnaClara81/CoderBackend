@@ -70,7 +70,7 @@ let {resultUser} = await userModel.create(newUser)
 
 
 //login
-/*    router.post('/login',passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
+    router.post('/login',passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
     try{
         const {email,password} = req.body
    
@@ -96,10 +96,10 @@ let {resultUser} = await userModel.create(newUser)
     console.log((error));
 }
 })
- */
+ 
  
 
-
+ 
 
 //success redirect
 router.post ('/register', passport.authenticate('register',{failureRedirect:'/failregister'}), async(req,res)=>{

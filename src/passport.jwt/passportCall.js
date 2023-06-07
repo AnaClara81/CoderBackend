@@ -1,4 +1,4 @@
-/* import passport from "passport"
+ /* import passport from "passport"
 
 const passportCall = strategy =>{
 return async(req,res,next) =>{
@@ -14,4 +14,4 @@ if(!user) return res.status(401).send({status:'error', error: info.messages ? in
 
 export default passportCall
 
-  */
+   */

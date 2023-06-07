@@ -7,6 +7,7 @@ import {isValidPassword} from '../utils/bcryptHash.js'
 import dotenv from 'dotenv'
 import session from 'express-session'
 import jwt  from 'jsonwebtoken'
+
 dotenv.config();
 
 const LocalStrategy = local.Strategy
@@ -30,6 +31,7 @@ const initPassport = () => {  //passport local
               email:username,
               password:createHash(password)
             }
+           
             
             let result = await userModel.create(newUser)
             return done(null, result)
@@ -51,13 +53,14 @@ const initPassport = () => {  //passport local
         usernameField:'email'
     }, async(username, password, done)=>{
         const userDb = await userModel.findOne({email:username})
+        
         try {
             
             if(!userDb) return done(null, false)
-    
             if(!isValidPassword(password, userDb))return done(null, false)
+            
             return done(null, userDb)
-
+            
         } catch (error) {
             return done (error)
         }
@@ -73,7 +76,7 @@ const initPassport = () => {  //passport local
             console.log('Profile', profile)
             try {
                 let user = await userModel.findOne({email: profile._json.email})
-                // if(user)
+                //console.log(user);
                 if(!user){
                     let newUser = {
                         firts_name: profile.username,
@@ -81,10 +84,12 @@ const initPassport = () => {  //passport local
                         email: profile._json.email,
                         password: ''
                     }
+                   
                     let result = await userModel.create(newUser)
                     return done(null, result)
                 }
                 return done(null, user)
+                
             } catch (error) {
                 console.log(error)
             }
