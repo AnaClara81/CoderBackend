@@ -21,7 +21,7 @@ console.log('estamos aca')
     .then(respuesta => respuesta.json())
     .then(respuesta => {
         console.log(respuesta)
-        localStorage.setItem('token',respuesta.acces_token)
+       localStorage.setItem('token', respuesta.access_token)
     })
  })
 

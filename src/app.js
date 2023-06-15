@@ -2,7 +2,7 @@ import express from 'express'// se trae el modulo express
 import session from 'express-session'
 import cookieParser from 'cookie-parser'  
 import uploader from '../src/utils/multer.utils.js'
-import userRouter from'./routes/users.router.js'
+import UserRouter from'./routes/newUser.router.js'
 import productRouter from'./routes/products.router.js'
 import routerCar from './routes/carts.router.js'
 import viewsRouter from './routes/views.router.js'
@@ -14,9 +14,9 @@ import routerServer from './routes/index.js'
 import mongoose from 'mongoose'
 import  connectDb  from './config/configServer.js'
 import connect from 'mongoose';
-import pruebasRouter  from './routes/pruebas.routes.js'
+import pruebasRouter  from './routes/pruebas.router.js'
 import sessionRouter from './routes/session.router.js'
-
+import RouterClass from './routes/RouterClass.js'
 
 //-------------------------------------------------------
 import  FileStore  from 'session-file-store'
@@ -26,8 +26,8 @@ import { Server } from 'socket.io';
 import socketChat from './utils/socketChat.js';
 import socketProducts from './utils/socketProducts.js';
 const app = express()
-
-const PORT = 8080
+const userRouter = new UserRouter()
+const PORT = process.env.PORT
 const httpServer = app.listen(PORT,()=>{
     console.log(`Escuchando en el puerto: ${PORT}`)
 })
@@ -46,10 +46,12 @@ app.set('view engine', 'handlebars')//para que use el motor de plantilla
 
 //hbs---------------------------------------------------------------------------------
 //passport
-import { initPassport, initPassportGithub} from './config/passport.config.js'
+//import { initPassport, initPassportGithub} from './config/passport.config.js'
+import initPassport from './passport.jwt/passport.config.js'
 import passport from 'passport'
 import passportCall from 'passport'
 import jwt  from 'jsonwebtoken'
+import newUserRouter from './routes/newUser.router.js'
 
 
 app.use(express.json()) // body-parser
@@ -80,7 +82,7 @@ app.use(cookieParser('P@l@braS3cr3t0'))
  
 
 //mongo  no va con jwt
- app.use(session({
+ /* app.use(session({
      store: new create ({
        mongoUrl:'mongodb://localhost:27017/comision39750',
        mongoOptions:{
@@ -92,12 +94,12 @@ app.use(cookieParser('P@l@braS3cr3t0'))
     secret:'secretCoder',
     resave: true,
     saveUninitialized:true
-})) 
+}))  */
 
 initPassport()
-initPassportGithub() 
+//initPassportGithub() 
 passport.use(passport.initialize())
-passport.use(passport.session())
+//passport.use(passport.session())
 
 
 //app.use('/register', viewsRouter)
@@ -115,7 +117,7 @@ app.use('/api/products', productRouter)
 //router de carrito
 app.use('/api/carts', routerCar ) 
 
-app.use('/api/usuarios', userRouter) 
+app.use('/api/usuarios', userRouter.getRouter()) 
 app.use('/pruebas', pruebasRouter)
 
 app.use('/api/session',sessionRouter )

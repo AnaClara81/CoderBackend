@@ -117,10 +117,10 @@ POST http://localhost:8080/api/session/register HTTP/1.1
 Content-Type: application/json
 
 {
-       "first_name":"lore",
-       "last_name":"portales",
-       "email":"lore@gmail.com",
-       "password":"lore123"
+       "first_name":"ana1",
+       "last_name":"eceiza1",
+       "email":"ana1@gmail.com",
+       "password":"ana1123"
 }
 
 
@@ -129,10 +129,38 @@ POST http://localhost:8080/api/session/login HTTP/1.1
 Content-Type: application/json
 
 {
-     "email":"lore@gmail.com",
-       "password":"lore123"
+     "email":"lore1@gmail.com",
+       "password":"lore1123"
 }
 
 ###
 GET http://localhost:8080/api/session/current HTTP/1.1
 #Content-Type: application/json
+
+###
+GET http://localhost:8080/pruebas/params/dddkkgvkAA HTTP/1.1
+
+###
+GET http://localhost:8080/api/usuarios
+
+
+###
+POST http://localhost:8080/sessions/login
+
+{
+       
+       "email":"lu@gmail.com",
+       "password":"lu123"
+}
+###
+POST http://localhost:8080/sessions/register
+   
+{
+       "first_name":"ana11",
+       "last_name":"eceiza1",
+       "email":"ana11@gmail.com",
+       "password":"ana11123"
+}
+
+###
+GET  http://localhost:8080/sessions/current

@@ -1,8 +1,12 @@
 import jwt from 'jsonwebtoken'
 export const  JWT_PRIVATE_KEY = 'palabraJwtSecreto';
+import dotenv from 'dotenv'
+dotenv.config();
+
+
 
 //usuario sin datos sensibles  generar el token
-const generateToken =(user) => {
+const generateToken = (user) => {
     const token = jwt.sign({user}, JWT_PRIVATE_KEY, {expiresIn:'1d'})
     return token
 }

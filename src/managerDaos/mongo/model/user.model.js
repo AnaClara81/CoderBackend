@@ -21,7 +21,16 @@ const userSchema = new Schema({
         unique:true
  
     },
+    date_of_birth:Date,
+
     password: String,
+
+  
+    cart:{
+        type: Schema.Types.ObjectId,
+        ref: 'carts',
+        
+     },
 
     role:{
         type:String,

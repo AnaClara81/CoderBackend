@@ -7,8 +7,8 @@ import {createHash} from '../utils/bcryptHash.js'
 import {isValidPassword} from '../utils/bcryptHash.js'
 import passport from 'passport';
 import {generateToken,authToken} from '../utils/jwt.js'
-//import passportCall from '../passport.jwt/passportCall.js'
-//import authorization from '../passport.jwt/authorizacionJwtRole.js'
+import passportCall from '../passport.jwt/passportCall.js'
+import authorization from '../passport.jwt/authorizacionJwtRole.js'
  ////sesiones
 
 
@@ -70,7 +70,7 @@ let {resultUser} = await userModel.create(newUser)
 
 
 //login
-    router.post('/login',passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
+  /*   router.post('/login',passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
     try{
         const {email,password} = req.body
    
@@ -98,7 +98,7 @@ let {resultUser} = await userModel.create(newUser)
 })
  
  
-
+ */
  
 
 //success redirect
@@ -130,36 +130,37 @@ router.get('/github', passport.authenticate('github', {scope: ['user:email']}), 
 
 
 
-/* router.post('/login',async(req,res)=>{
+ router.post('/login',async(req,res)=>{
     const{email,password} = req.body
-   
- const acces_token = generateToken({
-        first_name:'pedro',
-        last_name:'campo', 
-        email:'pedro@gmail.com',
-        role:'user'
-     })
-    res.cookie('coderCookieToken', acces_token,{
+    const access_token = generateToken({
+        //first_name:'pedro',
+        //last_name:'campo', 
+        email:req.body.email,
+        role:'user',
+    })
+    
+    res.cookie('coderCookieToken', access_token,{
        maxAge: 60*60*100,
        httpOnly:true
      })
     .send({
         status:'success',
         message:'login success',
+        access_token
         })
     
- }) */
- //router.get ('/current', passport.authenticate('jwt',{session:false}),(req,res)=>{
-       // res.send(req.user)
-    // })
+ }) 
+ router.get ('/current', passportCall('jwt',{session:false}),(req,res)=>{
+     res.send(req.user)
+     })
 
 
 // // si viene corrupto o no viene
 
-// // validar el role
-// router.get ('/current', passportCall('jwt'),authorization('user'),(req,res)=>{
-//     res.send(req.user)
-// })
+ //validar el role
+ router.get ('/current', passportCall('jwt'),authorization('admin'),(req,res)=>{
+    res.send(req.user)
+ })
 
 
 router.post('/register', async (req, res) => {   

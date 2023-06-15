@@ -1,15 +1,19 @@
-/*   import passport from "passport";
+ import passport from "passport";
 import jwt from "passport-jwt";
-import { JWT_PRIVATE_KEY } from '../utils/jwt.js'
+import JWT_PRIVATE_KEY from 'dotenv'
+
+//dotenv.config();
 
 const JWTStrategy = jwt.Strategy
 const ExtractJWT = jwt.ExtractJwt
 
 
 const cookieExtractor = req =>{
+    //console.log(req);
     let token = null
     if(req && req.cookies){
         token = req.cookies['coderCookieToken']
+        
     }
     return token
 }
@@ -18,10 +22,10 @@ const configStrategy ={
     secretOrKey: JWT_PRIVATE_KEY 
 }
     const initPassport =()=>{
-        passport.use('jwt', new JWTStrategy(configStrategy, async(jwt_paload,done)=>{
+        passport.use('jwt', new JWTStrategy(configStrategy, async(jwt_payload,done)=>{
             try{
            // done(null, false,{messages:'no hay usuarios'})
-            return done ( null, jwt_paload)
+            return done ( null, jwt_payload)
 
             }catch(error){
                 return done(error)
@@ -32,4 +36,4 @@ const configStrategy ={
 
 
 
-export default initPassport    */
+export default initPassport    
