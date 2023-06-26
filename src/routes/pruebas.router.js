@@ -85,10 +85,10 @@ function operacionCompleja(){
  
 }
 
-router.get('/sumacomp',(req,res)=>{
+/* router.get('/sumacomp',(req,res)=>{
      const result = operacionCompleja()
      res.send(`el resultado de la operacion es ${result}`)
-}) 
+})  */
 
 
 router.get('/block',(req,res)=>{
@@ -107,7 +107,7 @@ router.get('/noblock',(req,res)=>{
           
 
 router.get('/suma',(req,res)=>{
-     const result = operacionCompleja()
+     //const result = operacionCompleja()
      res.send(`Hola mundo`)
      })
      

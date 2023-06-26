@@ -10,7 +10,7 @@ console.log('estamos aca')
     const obj ={}
     data.forEach((value,key)=> obj[key] = value)
 
-    fetch('/api/session/login', {
+    fetch('/session/login', {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -22,6 +22,7 @@ console.log('estamos aca')
     .then(respuesta => {
         console.log(respuesta)
        localStorage.setItem('token', respuesta.access_token)
+       window.location.href = '/api/products'
     })
  })
 

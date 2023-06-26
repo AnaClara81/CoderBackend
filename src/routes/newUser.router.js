@@ -1,6 +1,6 @@
 import RouterClass from "./RouterClass.js"
 
-class UserRouter extends RouterClass {
+ class UserRouter extends RouterClass {
    init(){
        this.get('/',['PUBLIC'],async(req,res)=>{
         try{
@@ -20,4 +20,4 @@ class UserRouter extends RouterClass {
    }
 }
 
-export default UserRouter
+export default UserRouter 

@@ -2,7 +2,7 @@ import express from 'express'// se trae el modulo express
 import session from 'express-session'
 import cookieParser from 'cookie-parser'  
 import uploader from '../src/utils/multer.utils.js'
-import UserRouter from'./routes/newUser.router.js'
+import UserRouter from'./routes/users.router.js'
 import productRouter from'./routes/products.router.js'
 import routerCar from './routes/carts.router.js'
 import viewsRouter from './routes/views.router.js'
@@ -26,7 +26,7 @@ import { Server } from 'socket.io';
 import socketChat from './utils/socketChat.js';
 import socketProducts from './utils/socketProducts.js';
 const app = express()
-const userRouter = new UserRouter()
+//const userRouter = new UserRouter()
 const PORT = process.env.PORT
 const httpServer = app.listen(PORT,()=>{
     console.log(`Escuchando en el puerto: ${PORT}`)
@@ -51,7 +51,7 @@ import initPassport from './passport.jwt/passport.config.js'
 import passport from 'passport'
 import passportCall from 'passport'
 import jwt  from 'jsonwebtoken'
-import newUserRouter from './routes/newUser.router.js'
+//import newUserRouter from './routes/newUser.router.js'
 
 
 app.use(express.json()) // body-parser
@@ -117,8 +117,8 @@ app.use('/api/products', productRouter)
 //router de carrito
 app.use('/api/carts', routerCar ) 
 
-app.use('/api/usuarios', userRouter.getRouter()) 
-app.use('/pruebas', pruebasRouter)
+app.use('/api/usuarios',UserRouter) 
+//app.use('/pruebas', pruebasRouter)
 
 app.use('/api/session',sessionRouter )
 app.use('/api/session',viewsRouter )

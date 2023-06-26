@@ -26,7 +26,7 @@ let food =[
 const users = [
     {
         nombre:'Ana',
-        apellido:'Rmirez',
+        apellido:'Ramirez',
         edad:35,
         correo:'anar@gmail.com',
         telefono:'555-3456',

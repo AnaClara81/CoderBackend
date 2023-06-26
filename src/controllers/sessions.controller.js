@@ -1,51 +1,57 @@
+import { Router } from 'express';
 import { generateToken } from "../utils/jwt.js"
 
 class SessionsController {
-    login =(req,res)=>{
+  
+    login = (req,res)=>{
         const{email,password} = req.body
-        const user = {
-        //first_name:'pedro',
-        //last_name:'campo', 
-        email:req.body.email,
-        role:'user',
-    } 
-    const token = generateToken(user)
-    
-    res.cookie('coderCookieToken', token,{
-       maxAge: 60*60*100,
-       httpOnly:true
-     })
-    .send({
-        status:'success',
-        message:'login success',
-        token
+        const first_name = req.cookies.first_name;
+        console.log(first_name,'NOMBRE');
+        
+        const access_token = generateToken({
+           email:req.body.email,
+            role:'user',
         })
-    
- }
-
-    register =(req,res) =>{
-        try {
-            const {username,first_name, last_name, email, password} = req.body 
-    
-             let token = generateToken({
-                first_name: 'pedro',
-                 last_name: 'campo',
-                 email: 'pedro@gmail.com'
+        res.cookie('coderCookieToken', access_token,{
+           maxAge: 60*60*100,
+           httpOnly:true
+         })
+        .send({
+            status:'success',
+            message:'login success',
+            access_token,
+           
             })
-        
-        
-            res.status(200).send({
-                 status: 'success',
-                message: 'Usuario creado correctamente',
-                 token
-             })
-         } catch (error) {
-             console.log(error)
-        }
-       
+        console.log(req.body.email,'controller');
      }
+   
+     register = async (req,res)=>{
+        const {username,first_name, last_name, email,password} = req.body
+        //validar si vienen vacios y caracteres especiales
+    
+        //validar si existe el mail
+    
+    const existUser = await userModel.findOne({email})
+    if(existUser) return res.send ({status:'error', message:'el mail ya esta registrado'})
+    
+    const newUser = {
+        username,
+        first_name,
+        last_name,
+        email,
+        password: createHash(password)
     
     }
+    let {resultUser} = await userModel.create(newUser)
+    
+        res.status(200).send({
+            status:'succes',
+            message:'Usuario creado correctamente',
+        })
+       console.log(newUser);
+    }
+}
+    
 
 
 export default new SessionsController()

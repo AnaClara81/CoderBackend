@@ -5,13 +5,15 @@ const router = Router()
 import productRouter from './products.router.js'
 import routerCar from './carts.router.js'
 import usersRouter from './users.router.js'
-import sessionsRouter from './sessions.router.js'
-
+import sessionsRouter from './session.router.js'
+import pruebasRouter  from '../routes/pruebas.router.js'
 import uploader from '../utils/multer.utils.js'
 
 // //router de carrito
 
-router.use('/sessions',sessionsRouter)
+router.use('/session',sessionsRouter)
+
+router.use('/pruebas', pruebasRouter)
 
 router.use('/api/carts', routerCar)
 

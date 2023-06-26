@@ -1,12 +1,13 @@
 import productModel from './model/product.model.js'
+import mongoosePaginate from 'mongoose-paginate-v2'
 
-
-class ProductManagerMongo {
+class ProductDaoMongo {
    
-    async getProducts(){
+    async get(){
         try{
-            return await productModel.find({}).lean()
-            
+            const products = await productModel.find().lean()
+            return products
+          
         }catch(err){
             return new Error(err)
         }
@@ -14,8 +15,7 @@ class ProductManagerMongo {
 
     async getProductById(pid){
         try{
-        
-            return await productModel.findOne({ _id: pid})
+           return await productModel.findOne({ _id: pid})
 
         }catch(error){
             return new Error (error)
@@ -71,4 +71,4 @@ class ProductManagerMongo {
  */
 }
 
-export default  new ProductManagerMongo;
+export default ProductDaoMongo;

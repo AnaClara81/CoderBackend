@@ -9,40 +9,13 @@ import passport from 'passport';
 import {generateToken,authToken} from '../utils/jwt.js'
 import passportCall from '../passport.jwt/passportCall.js'
 import authorization from '../passport.jwt/authorizacionJwtRole.js'
- ////sesiones
+ 
 
-
- /* router.post('/login',async(req,res)=>{
-    const{email,password} = req.body
-    //validar email y  password 
-
-    //vamos a tner una funcion para validar el password
-    const userDb = await userModel.findOne({email})
-
-    if(!userDb) return res.send({status:'error', message:'No existe ese usuario'})
-   
-    //validar password
-     if(!isValidPassword(password, userDb)) return res.status(401).send({
-        status:'error',
-        message:'El usuario o la contraseña no son correctos'
-     }) 
-     req.session.user ={
-        first_name:userDb.first_name,
-        last_name:userDb.last_name, 
-        email:userDb.email, 
-        role: 'admin'
-    }
-    res.send({
-        status:'success',
-        message:'login success',
-        session :req.session.user
-    })
-    
-}) */
-
-
-/* router.post('/register',async (req,res)=>{
+//este va
+  router.post('/register',async (req,res)=>{
     const {username,first_name, last_name, email,password} = req.body
+    res.cookie('first_name', first_name);
+
     //validar si vienen vacios y caracteres especiales
 
     //validar si existe el mail
@@ -65,47 +38,8 @@ let {resultUser} = await userModel.create(newUser)
         message:'Usuario creado correctamente',
     })
    console.log(newUser);
-})  */
-
-
-
-//login
-  /*   router.post('/login',passport.authenticate('login', {failureRedirect:'/faillogin'}), async (req,res)=>{
-    try{
-        const {email,password} = req.body
-   
-    if(!req.user) return res.status(401).send({status:'error', message:'invalid credencial'})
-    req.session.user ={
-        first_name: req.user.first_name,
-        last_name: req.user.last_name,
-        email: req.user.email,
-        role: req.user.role
-    }
-    if(email === "admin@admin.com"){
-        req.session.user.role ="admin" 
-    }else{
-        req.session.user.role ="user"
-    }
-    
-    console.log(req.session.user);
-    console.log(req.user.first_name);
-    console.log(req.session.user.role)
-    res.redirect(`/api/products`);
-
-}catch(error){
-    console.log((error));
-}
-})
+})  
  
- 
- */
- 
-
-//success redirect
-router.post ('/register', passport.authenticate('register',{failureRedirect:'/failregister'}), async(req,res)=>{
-      res.send({ status:'succes', message:'User registered'})
-}) 
-
 
 router.get ('/faillogin', async (req, res)=>{
     console.log('Fallo estrategia')
@@ -129,16 +63,16 @@ router.get('/github', passport.authenticate('github', {scope: ['user:email']}), 
  
 
 
-
- router.post('/login',async(req,res)=>{
+///este va
+  router.post('/login',async(req,res)=>{
     const{email,password} = req.body
+    const first_name = req.cookies.first_name;
+    console.log(first_name,'NOMBRE');
+    
     const access_token = generateToken({
-        //first_name:'pedro',
-        //last_name:'campo', 
-        email:req.body.email,
+       email:req.body.email,
         role:'user',
     })
-    
     res.cookie('coderCookieToken', access_token,{
        maxAge: 60*60*100,
        httpOnly:true
@@ -146,47 +80,18 @@ router.get('/github', passport.authenticate('github', {scope: ['user:email']}), 
     .send({
         status:'success',
         message:'login success',
-        access_token
+        access_token,
+       
         })
-    
- }) 
- router.get ('/current', passportCall('jwt',{session:false}),(req,res)=>{
-     res.send(req.user)
-     })
+    console.log(req.body.email,'session');
+ })    
 
 
-// // si viene corrupto o no viene
-
- //validar el role
- router.get ('/current', passportCall('jwt'),authorization('admin'),(req,res)=>{
+ router.get ('/products',(req,res)=>{
     res.send(req.user)
  })
 
 
-router.post('/register', async (req, res) => {   
-      try {
-        const {username,first_name, last_name, email, password} = req.body 
-
-         let token = generateToken({
-            first_name: 'pedro',
-             last_name: 'campo',
-             email: 'pedro@gmail.com'
-        })
-    
-    
-        res.status(200).send({
-             status: 'success',
-            message: 'Usuario creado correctamente',
-             token
-         })
-     } catch (error) {
-         console.log(error)
-    }
-   
- })
-
-
- 
 
 router.get('/logout', (req, res)=>{
     req.session.destroy (err =>{

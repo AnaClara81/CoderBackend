@@ -1,15 +1,16 @@
-import userModel from "./model/user.model.js";
+ import userModel from "./model/user.model.js";
 import mongoosePaginate from 'mongoose-paginate-v2'
 
-class UserManagerMongo {
+class UserDaoMongo {
     
-    async getUsers(){
+    async get(){
         try{
             //return await userModel.find({})//({first_name:'Celia'}).explain('executionsStats')
            //return await userModel.find({first_name:'Celia'}).lean()//convierto en objeto javascript para acceder a los campos
        //mongoose- paginate
        //const { docs } = users
-      return await userModel.paginate({},{limit:10, page:1, lean:true})
+      return await userModel.find({})
+      //paginate({},{limit:10, page:1, lean:true})
        
         }catch(err){
             return new Error(err)
@@ -21,4 +22,4 @@ class UserManagerMongo {
     async deleteUser(){}
 }
 
-export default UserManagerMongo;
+export default UserDaoMongo; 

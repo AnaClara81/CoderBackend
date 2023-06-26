@@ -28,17 +28,18 @@
 
 
      <div>
-    <h1>Inyección de cookies</h1>
-     <form id = "cookieForm" action ="/sessions/login" method="POST"> 
+    <h1>Login</h1>
+     <form id = "cookieForm" action ="api/session/login" method="POST"> 
       <label>Email</label>
         <input name="email">
         <br />
         <label>Password</label>
         <input name="password">
         <input type="submit">
+       // <a href="/api/products">Entrar</a>
     </form>
     <br />
-    <a href="/api/session/github">Entrar con Github</a>
+    <a href="/session/github">Entrar con Github</a>
      </div>
  
    <script src="/static/js/index.js"></script> 

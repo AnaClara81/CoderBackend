@@ -1,101 +1,26 @@
 import  { Router } from 'express'
-import UserManagerMongo from '../managerDaos/mongo/user.mongo.js'
+//import UserManagerMongo from '../managerDaos/mongo/user.mongo.js'
 import userModel  from '../managerDaos/mongo/model/user.model.js'
 import userManager from '../managerDaos/userManager.js'
 import mongoosePaginate from 'mongoose-paginate-v2'
 import auth from '../middlewares/autenticacion.middlewares.js'
+import UserController from '../controllers/users.controller.js' 
+ import UserDaoMongo from '../managerDaos/mongo/user.mongo.js' 
+ import passportCall from '../passport.jwt/passportCall.js'
+import authorization from '../passport.jwt/authorizacionJwtRole.js'
+const userController = UserController
 
 const router = Router()
 
-
-
-router.get('/',auth, async (req,res)=>{
-    try{
-        //const userManager = new UserManagerMongo()
-        //const users = await userManager.getUsers()
-        const {page=1} = req.query
-        const users = await userModel.paginate({},{limit:10, page, lean:true})
-        const { docs, hasPrevPage, hasNextPage,prevPage, nextPage, totalPage } = users
-        //console.log(users)
-        //console.log(users[0]._id.toString())
-        res.render('users', {
-            status: 'success',
-            users: docs,
-            hasPrevPage,
-            hasNextPage,
-            prevPage,
-            nextPage
-          });
-    }catch (error){
-        console.log(error);
-    }
-    
-})
+router.get('/',userController.getUsers)
 
 // POST http://localhost:8080 /usuarios
-router.post('/', async (req, res)=>{
-    try {
-        let user = req.body
-
-       if(!user.nombre || !user.apellido){ 
-            return res.status(400).send({status:'error', mensaje: 'todos los campos son necesarios'})
-        }
-
-        const newUser = {
-            first_name: user.nombre, 
-            last_name: user.apellido,
-            email: user.email
-        } 
-        
-        let result =  await userModel.create(newUser) 
-
-        
-        res.status(200).send({result})
-    } catch (error) {
-        console.log(error)
-    }
-    
-})
+router.post('/',userController.createUsers)
 
 // PUT http://localhost:8080 /usuarios
-router.put('/:uid', async (req, res) => {
-    const { uid } = req.params
-    const user = req.body
+router.put('/:uid',userController.updateUsers)
 
-    // validar pid 
-    // if(!id)   
-    // validar campos 
-    if(!user.nombre || !user.apellido){ 
-        return res.status(400).send({status:'error', mensaje: 'todos los campos son necesarios'})
-    }
-   
-    let  userToReplace = {
-        first_name: user.nombre,
-        last_name: user.apellido,
-        email: user.email
-    }
-
-    let result = await userModel.updateOne({_id: uid}, userToReplace)
-    
-
-    res.send({
-        status: 'success',
-        payload: result
-    })
-})
-
-router.delete('/:uid', async (req, res) => {
-    try {
-        let {uid} = req.params
-        // buscar por pid user
-    
-        let result = await userModel.deleteOne({_id: uid})
-        res.send({status: 'success', payload: result})
-        
-    } catch (error) {
-        console.log(error)
-    }
-})
+router.delete('/:uid',userController.deleteUsers)
 
 
 // let usuarios = [
@@ -177,5 +102,5 @@ router.delete('/:uid', async (req, res) => {
 //     res.send({status: 'success', payload: usuarios})
 // })
 //    
-//module.export = router
+
 export default router;

@@ -5,165 +5,41 @@ import productManagerMongo from '../managerDaos/mongo/product.mongo.js'
 import productManager from '../managerDaos/productManager.js'
 import productModel from '../managerDaos/mongo/model/product.model.js'
 import { authToken } from '../utils/jwt.js'
+import mongoosePaginate from 'mongoose-paginate-v2'
+import auth from '../middlewares/autenticacion.middlewares.js'
+import express from 'express'// se trae el modulo express
 import passport from 'passport'
 import passportCall from '../passport.jwt/passportCall.js'
 import authorization from '../passport.jwt/authorizacionJwtRole.js'
+import ProductController from '../controllers/products.controller.js'
+import ProductDaoMongo from '../managerDaos/mongo/product.mongo.js'
+const productController = ProductController
 const router = Router()
 
+import initPassport from '../passport.jwt/passport.config.js'
+
+
+router.get('/',
+
+
+passportCall('jwt'),
+
+authorization('user'),
+
+productController.getProducts)
+
+router.get('/:pid',productController.getProductById)
+   
+
+router.post('/',productController.createProducts)
+   
+
+router.put('/:pid',productController.updateProducts) 
  
-//import productManager from '../managerDaos/productManager.js'
-//import uploader from "../utils/multer.utils.js";
-
-import express from 'express'// se trae el modulo express
-
-
-router.get('/',passportCall('jwt'),authorization('user') ,async (req,res)=>{
-    try{
-       // const nombreUsuario = req.session.user.first_name
-        //const role =  req.session.user.role
-    //const products = await productManagerMongo.getProducts()
-     const {page=1} = req.query
-     const products = await productModel.paginate({},{limit:5, page, lean:true})
-        const { docs, hasPrevPage, hasNextPage,prevPage, nextPage, totalPage } = products
-        res.render('products',{
-            status: 'success',
-          //  nombreUsuario,
-          //  role,
-            products: docs,
-            hasPrevPage,
-            hasNextPage,
-            prevPage,
-            nextPage
-          });
-       
-       // const products = await productManagerMongo.getOrderProduct()
-         //res.send({status: 'success', payload: products})
-    }catch(error) {
-        console.log(error);
-    }
-    
-})
-
-
-
-router.get('/:pid', async (req,res)=>{
-    try{
-        const{pid} = req.params
-        let products = await productManagerMongo.getProductById(pid)
-        res.status(200).send({
-            status:'success, get id',
-            payload: products
-         
-        })
-    }catch (error)  {
-
-        console.log(error);
-    }
-}) 
-
-
-router.post('/', async (req,res)=>{
-    try {
-        const newProduct = req.body
-        //console.log(newProduct);
-        let result = await productManagerMongo.addProduct(newProduct)
-
-
-        res.status(200).send({
-            status: 'success',
-            payload: result
-        })
-       console.log(result)
-    } catch (error) {
-        console.log(error)
-    }
-})
-
-/*router.put('/:uid', async (req, res) => {
-    const { pid } = req.params
-    const product = req.body
-    console.log(pid);
-    console.log(product);
-    // validar pid 
-    // if(!id)   
-    // validar campos 
-   // if(!product.title || !product.description || product.thumbnail || product.price 
-    //|| product.stock || product.status  || product.category  ){ 
-    //  return res.status(400).send({status:'error', mensaje: 'todos los campos son necesarios'})
-    //}
-         let  productToReplace = {
-              title: product.title,
-              description: product.description,
-              thumbnail:product.thumbnail,
-              price:product.price,
-              stock:product.stock,
-              code:product.stock,
-              status:product.status,
-              category:product.category
-       }  
-       let result = await productManagerMongo.updateProduct({ _id: pid }, productToReplace)
-       
-       console.log(productToReplace);
-
-    res.send({
-        status: 'success',
-        payload: result
-    })
-})*/
-
-router.put('/:pid', async (req,res) =>{
-    try {
-    const { pid } = req.params
-    const product = req.body
- console.log(pid)      
- console.log(product);
-       let  productToReplace = {
-              title: product.title,
-              description: product.description,
-              thumbnail:product.thumbnail,
-             price:product.price,
-              stock:product.stock,
-              code:product.stock,
-              status:product.status,
-              category:product.category
-    }  
-
-const result = await productManagerMongo.updateProduct({ _id: pid}, productToReplace)
-
-     console.log(productToReplace);
-        
-        res.status(200).send({
-            status: 'success',
-            payload: result
-        })
-    } catch (error) {
-        console.log(error)
-    }
-    }) 
  
-
-
-    
-
-
-router.delete('/:pid', async (req,res)=>{
-    try {
-        const { pid } = req.params
-        const product = req.body
-
-        let result = await productManagerMongo.deleteProduct(pid, product)
-
-
-        res.status(200).send({
-            status: 'success',
-            payload: result
-        })
-       // console.log(result)
-    } catch (error) {
-        console.log(error)
-    }
-})
-    ///res.status(200).send('Borrar productos')
+router.delete('/:pid',productController.deleteProducts)
+  
+ 
 
 
 
@@ -354,4 +230,3 @@ router.delete('/:pid', async (req, res) => {
  */
 
 export default router
-//module.exports = router
