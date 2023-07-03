@@ -1,9 +1,9 @@
-import userModel from "../managerDaos/mongo/model/user.model.js"
+import userModel from "../dao/mongo/model/user.model.js"
 import mongoosePaginate from 'mongoose-paginate-v2';
-import {userService} from "../service/index.js"
+import userService from "../service/index.js"
 class UserController{
 
-    async getUsers(req,res){
+    async get(req,res){
         try {
             const users = await userService.get()
             res.send({
@@ -18,7 +18,7 @@ class UserController{
 }
 
 
-async createUsers(req, res){
+async create(req, res){
     try {
         let user = req.body
 
@@ -43,7 +43,7 @@ async createUsers(req, res){
 }
 
 
-async updateUsers(req, res){
+async update(req, res){
     const { uid } = req.params
     const user = req.body
 
@@ -70,7 +70,7 @@ async updateUsers(req, res){
 }
 
 
-async deleteUsers(req, res) {
+async delete(req, res) {
     try {
         let {uid} = req.params
         // buscar por pid user

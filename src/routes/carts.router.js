@@ -1,7 +1,10 @@
 import { Router } from "express";
 //import CartManager from "../managerDaos/cartsManager.js";
-import cartModel from "../managerDaos/mongo/model/cart.model.js";
+import cartModel from "../dao/mongo/model/cart.model.js";
 import { paginateSubDocs } from "mongoose-paginate-v2";
+import pkg from 'mongoose';
+const {uuidv4} = pkg;
+
 const routerCar = Router();
 
 routerCar.get('/',async(req,res)=>{
@@ -116,7 +119,41 @@ routerCar.delete('/cid', async(req,res)=> {
     }
 })
 
+routerCar.post('/:cid/purcharse',async(req,res)=>{
+    const { cid } = req.params
+    const cart = await cartService.getCart(cid)
 
+    //validacion que exista el cart
+    //if(!cart)return
+
+    const productNoComprado=[]
+    for(const item in cart.products){
+        const product = item.product
+        const quantity = item.quantity
+        const stock = item.product.stock
+
+        if(quantity > stock){
+            productNoComprado.push(product)
+        }else{
+            const respuesta = productService.updateProduct(product,{quantity: stock - quantity})
+        }
+    }
+//crear el ticket con los datos de la compra
+const ticket = await ticketService.createTicket({
+    user:req.user._id,
+    code:uuidv4(),
+    amount:cart.products.filter(product =>!productNoComprado.includes(item.product._id)).reduce(),
+    purcharser: req.user.email,
+})
+ if(productNoComprado.length > 0){
+    cart.products.filter(product =>!productNoComprado.includes(item.product._id))
+ }else{
+    await cartService.delet(cid)
+ }
+    res.send ({
+        status:'success'
+    })
+})
 
 
 

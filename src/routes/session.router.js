@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const router = Router()
 import auth from '../middlewares/autenticacion.middlewares.js'
-import userModel from '../managerDaos/mongo/model/user.model.js'
+import userModel from '../dao/mongo/model/user.model.js'
 import bcrypt from '../utils/bcryptHash.js'
 import {createHash} from '../utils/bcryptHash.js'
 import {isValidPassword} from '../utils/bcryptHash.js'

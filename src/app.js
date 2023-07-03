@@ -18,6 +18,7 @@ import pruebasRouter  from './routes/pruebas.router.js'
 import sessionRouter from './routes/session.router.js'
 import RouterClass from './routes/RouterClass.js'
 
+import contactsRouter from './routes/contacts.router.js'
 //-------------------------------------------------------
 import  FileStore  from 'session-file-store'
 import create from 'connect-mongo'
@@ -26,12 +27,16 @@ import { Server } from 'socket.io';
 import socketChat from './utils/socketChat.js';
 import socketProducts from './utils/socketProducts.js';
 const app = express()
-//const userRouter = new UserRouter()
+
+import cors from 'cors'
+
 const PORT = process.env.PORT
 const httpServer = app.listen(PORT,()=>{
     console.log(`Escuchando en el puerto: ${PORT}`)
 })
 
+connectDb()//instrancia de nuestra base de datos
+connectDb();
 connectDb();
 const io = new Server(httpServer)
 
@@ -55,6 +60,7 @@ import jwt  from 'jsonwebtoken'
 
 
 app.use(express.json()) // body-parser
+app.use(cors());
 app.use(express.urlencoded({extended: true}))
 app.use('/static', express.static(__dirname+'/public'))
 app.use(cookieParser('P@l@braS3cr3t0'))
@@ -121,6 +127,7 @@ app.use('/api/usuarios',UserRouter)
 //app.use('/pruebas', pruebasRouter)
 
 app.use('/api/session',sessionRouter )
+app.use('/api/contacts',contactsRouter)
 app.use('/api/session',viewsRouter )
 app.use(routerServer)
 

@@ -1,5 +1,5 @@
 
-import productManager from '../managerDaos/productManager.js'
+import productManager from '../dao/productManager.js'
 const productoManager = new productManager()
 
 

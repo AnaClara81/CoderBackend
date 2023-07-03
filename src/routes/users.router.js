@@ -1,26 +1,26 @@
 import  { Router } from 'express'
 //import UserManagerMongo from '../managerDaos/mongo/user.mongo.js'
-import userModel  from '../managerDaos/mongo/model/user.model.js'
-import userManager from '../managerDaos/userManager.js'
+import userModel  from '../dao/mongo/model/user.model.js'
+import userManager from '../dao/userManager.js'
 import mongoosePaginate from 'mongoose-paginate-v2'
 import auth from '../middlewares/autenticacion.middlewares.js'
 import UserController from '../controllers/users.controller.js' 
- import UserDaoMongo from '../managerDaos/mongo/user.mongo.js' 
+ import UserDaoMongo from '../dao/mongo/user.mongo.js' 
  import passportCall from '../passport.jwt/passportCall.js'
 import authorization from '../passport.jwt/authorizacionJwtRole.js'
 const userController = UserController
 
 const router = Router()
 
-router.get('/',userController.getUsers)
+router.get('/',userController.get)
 
 // POST http://localhost:8080 /usuarios
-router.post('/',userController.createUsers)
+router.post('/',userController.create)
 
 // PUT http://localhost:8080 /usuarios
-router.put('/:uid',userController.updateUsers)
+router.put('/:uid',userController.update)
 
-router.delete('/:uid',userController.deleteUsers)
+router.delete('/:uid',userController.delete)
 
 
 // let usuarios = [

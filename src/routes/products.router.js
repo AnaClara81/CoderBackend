@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import productManagerMongo from '../managerDaos/mongo/product.mongo.js'
+import productManagerMongo from '../dao/mongo/product.mongo.js'
 //import productManager from '../managerDaos/productManager.js'
 //import socketProducts from '../utils/socketProducts'
-import productManager from '../managerDaos/productManager.js'
-import productModel from '../managerDaos/mongo/model/product.model.js'
+import productManager from '../dao/productManager.js'
+import productModel from '../dao/mongo/model/product.model.js'
 import { authToken } from '../utils/jwt.js'
 import mongoosePaginate from 'mongoose-paginate-v2'
 import auth from '../middlewares/autenticacion.middlewares.js'
@@ -12,7 +12,7 @@ import passport from 'passport'
 import passportCall from '../passport.jwt/passportCall.js'
 import authorization from '../passport.jwt/authorizacionJwtRole.js'
 import ProductController from '../controllers/products.controller.js'
-import ProductDaoMongo from '../managerDaos/mongo/product.mongo.js'
+import ProductDaoMongo from '../dao/mongo/product.mongo.js'
 const productController = ProductController
 const router = Router()
 
@@ -20,24 +20,21 @@ import initPassport from '../passport.jwt/passport.config.js'
 
 
 router.get('/',
+//passportCall('jwt'),
+//authorization('user'),
+productController.get)
 
 
-passportCall('jwt'),
-
-authorization('user'),
-
-productController.getProducts)
-
-router.get('/:pid',productController.getProductById)
+router.get('/:pid',productController.getById)
    
 
-router.post('/',productController.createProducts)
+router.post('/',productController.create)
    
 
-router.put('/:pid',productController.updateProducts) 
+router.put('/:pid',productController.update) 
  
  
-router.delete('/:pid',productController.deleteProducts)
+router.delete('/:pid',productController.delete)
   
  
 

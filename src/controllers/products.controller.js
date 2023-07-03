@@ -1,30 +1,33 @@
-import {productService} from "../service/index.js"
-import productModel from "../managerDaos/mongo/model/product.model.js"
-import { userService } from "../service/index.js";
+import { productService, userService, contactService } from "../service/index.js";
+import productModel from "../dao/mongo/model/product.model.js"
+
 class ProductController{
 
-async getProducts(req, res){
+async get(req, res){
     try{ 
    
         let visitor = { first_name : req.cookies.first_name,
-                   role :'user'}
+                  role :'user'};
                    
-                   let products = await productService.get()
-                   res.render('products',{
+        let products = await productService.get()
+                   res.send({
                        status: 'success',
                        visitor,
-                       products,
-                    })
-                    console.log(visitor.first_name);
-    
+                       payload:products,
+                    });
+                   
+                  //  console.log(visitor.first_name);
+                
     }catch(error) {
         console.log(error);
+
+    
     }
     
 } 
 
 
-async getProductById(req, res){
+async getById(req, res){
     try{
         const{pid} = req.params
         let products = await productService.getProductById(pid)
@@ -44,7 +47,7 @@ async getProductById(req, res){
 
 
 
-async createProducts(req, res){
+async create(req, res){
     try {
         const newProduct = req.body
         //console.log(newProduct);
@@ -62,7 +65,7 @@ async createProducts(req, res){
 }
 
 
-async updateProducts(req, res){
+async update(req, res){
     try {
         const { pid } = req.params
         const product = req.body
@@ -93,7 +96,7 @@ async updateProducts(req, res){
         }
 
 
-async deleteProducts(req, res){
+async delete(req, res){
     try {
         const { pid } = req.params
         const product = req.body
@@ -113,4 +116,4 @@ async deleteProducts(req, res){
 
 }
 
-export default new ProductController()
+export default new ProductController();

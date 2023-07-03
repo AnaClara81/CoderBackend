@@ -4,7 +4,7 @@ const path = './productManager.js'
  class productManager{
     constructor(){
         this.products =[]
-            this.path = '../src/managerDaos/products.json'
+            this.path = '../src/dao/products.json'
         
     }
     __appendProduct = async () => {

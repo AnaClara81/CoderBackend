@@ -2,10 +2,13 @@ import productModel from './model/product.model.js'
 import mongoosePaginate from 'mongoose-paginate-v2'
 
 class ProductDaoMongo {
+    constructor(){
+        this.productModel = productModel
+    }
    
     async get(){
         try{
-            const products = await productModel.find().lean()
+            const products = await this.productModel.find().lean()
             return products
           
         }catch(err){
@@ -13,9 +16,9 @@ class ProductDaoMongo {
         }
     }
 
-    async getProductById(pid){
+    async getById(pid){
         try{
-           return await productModel.findOne({ _id: pid})
+           return await this.productModel.findOne({ _id: pid})
 
         }catch(error){
             return new Error (error)
@@ -24,19 +27,19 @@ class ProductDaoMongo {
     }
     
     
-    async addProduct(newProduct){
+    async create(newProduct){
        try{
-            return await productModel.create(newProduct)
+            return await this.productModel.create(newProduct)
        } 
          catch(error){
         return new Error (error)
        }
     
 }
-    async updateProduct(pid, productToReplace ){
+    async update(pid, productToReplace ){
         
      try{
-            return await productModel.updateOne({ _id: pid },productToReplace)
+            return await this.productModel.updateOne({ _id: pid },productToReplace)
             
         }catch(error){
             return new Error (error)
@@ -44,9 +47,9 @@ class ProductDaoMongo {
     } 
 
     
-   async deleteProduct(pid){
+   async delete(pid){
         try{
-            return await productModel.deleteOne({_id: pid})
+            return await this.productModel.deleteOne({_id: pid})
         }catch(error){
             return new Error (error)
            }
