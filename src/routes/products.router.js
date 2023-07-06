@@ -19,6 +19,7 @@ const router = Router()
 import initPassport from '../passport.jwt/passport.config.js'
 
 
+
 router.get('/',
 //passportCall('jwt'),
 //authorization('user'),

@@ -8,13 +8,13 @@ import usersRouter from './users.router.js'
 import sessionsRouter from './session.router.js'
 import pruebasRouter  from '../routes/pruebas.router.js'
 import uploader from '../utils/multer.utils.js'
-
+import contactsRouter from '../routes/contacts.router.js'
 // //router de carrito
 
 router.use('/session',sessionsRouter)
 
 router.use('/pruebas', pruebasRouter)
-
+router.use ('/api/contacts', contactsRouter )
 router.use('/api/carts', routerCar)
 
 router.use('/api/products', productRouter)

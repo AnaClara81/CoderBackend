@@ -1,6 +1,6 @@
-import {Schema, model} from 'mongoose'
+import { Schema, model } from 'mongoose'
 
-const ContactCollection ='contacts'
+const ContactCollection = 'contacts'
 
 const ContactSchema = Schema({
     firs_name:{

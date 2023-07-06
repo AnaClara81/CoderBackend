@@ -1,4 +1,8 @@
-import { productService, userService, contactService } from "../service/index.js";
+import productService from "../service/index.js";
+//import {userService}  from "../service/index.js";
+//import { contactService}  from "../service/index.js";
+
+
 import productModel from "../dao/mongo/model/product.model.js"
 
 class ProductController{

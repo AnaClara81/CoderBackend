@@ -3,6 +3,42 @@ const router = Router()
 import auth from '../middlewares/autenticacion.middlewares.js'
 import {fork} from 'child_process'
 //import operacionCompleja from '../utils/operacionCompleja.js'
+import nodemailer from 'nodemailer'
+import config from '../config/configServer.js'
+
+
+
+router.get('/sms', async (req, res)=>{
+     res.send('Email enviado')
+})
+
+const transport= nodemailer.createTransport({
+     service:'gmail',
+     port:587,
+     auth:{
+          user:config.GMAIL_USER_APP,
+          pass:config.GMAIL_PASS_APP
+     },
+    tls: {
+          rejectUnauthorized: false
+        } 
+})
+
+router.get('/mail', async (req, res)=>{
+     let result = await transport.sendMail({
+          from:'Coder Test <anaceceiza81@gmail.com>',
+          to:'anaceceiza81@gmail.com',
+          subject:'Correo de prueba comision 39750',
+          html:`<div>
+          <h1>Esto es un test </h1>
+          </div>`,
+          attachments:[]
+     })
+     res.send('Email enviado')
+})
+
+
+
 
 
 

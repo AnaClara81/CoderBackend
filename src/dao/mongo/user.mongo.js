@@ -1,6 +1,6 @@
- import userModel from "./model/user.model.js";
+ //import userModel from "./model/user.model.js";
 import mongoosePaginate from 'mongoose-paginate-v2'
-
+import userModel from '../mongo/model/user.model.js'
 class UserDaoMongo {
     constructor(){
         this.userModel = userModel
@@ -22,7 +22,7 @@ class UserDaoMongo {
         return await this.userModel.finOne({_id :uid})
     }
 
-    create =async (newUser)=>{
+    create = async (newUser)=>{
        return await this.userModel.create(newUser)
       
     }

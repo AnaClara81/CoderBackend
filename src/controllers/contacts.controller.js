@@ -1,5 +1,5 @@
 import ContactDto from "../dto/contact.dto.js"
-import {contactService} from "../service/index.js"
+import contactService from "../service/index.js"
 
 class ContactController {
       getContacts =async(req,res)=>{ 
