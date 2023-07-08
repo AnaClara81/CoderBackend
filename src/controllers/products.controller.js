@@ -1,4 +1,4 @@
-import productService from "../service/index.js";
+ import productService from '../service/index.js'
 //import {userService}  from "../service/index.js";
 //import { contactService}  from "../service/index.js";
 
@@ -13,7 +13,7 @@ async get(req, res){
         let visitor = { first_name : req.cookies.first_name,
                   role :'user'};
                    
-        let products = await productService.get()
+        let products = await productService.get;
                    res.send({
                        status: 'success',
                        visitor,
@@ -34,7 +34,7 @@ async get(req, res){
 async getById(req, res){
     try{
         const{pid} = req.params
-        let products = await productService.getProductById(pid)
+        let products = await productService.getProductById(pid);
         //let products = await productManagerMongo.getProductById(pid)
         res.render('products',{
             status:'success, get id',
@@ -55,7 +55,7 @@ async create(req, res){
     try {
         const newProduct = req.body
         //console.log(newProduct);
-        let result = await productService.create(newProduct)
+        let result = await productService.create(newProduct);
 
 
         res.status(200).send({
@@ -86,7 +86,7 @@ async update(req, res){
                   category:product.category
         }  
     
-    const result = await productService.updateProducts({ _id: pid}, productToReplace)
+    const result = await productService.updateProducts({ _id: pid}, productToReplace);
     
          console.log(productToReplace);
             
@@ -120,4 +120,4 @@ async delete(req, res){
 
 }
 
-export default new ProductController();
+export default new ProductController(); 

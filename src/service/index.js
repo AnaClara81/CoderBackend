@@ -1,3 +1,5 @@
+import config from '../config/configServer.js'
+import ProductDaoMongo from '../dao/mongo/product.mongo.js'
 import { ContactDao,
          UserDao, 
          ProductDao
@@ -21,6 +23,7 @@ export default {
 
 
  
+
 
 
 /* //traer instacia de los daos

@@ -15,9 +15,9 @@ import ContactsDaoMemory from '../dao/memory/contacts.memory.js';
  let ContactDao
 
 
- switch (config.persistence) {
+ switch (process.env.PERSISTENCE) {
     case'MONGO':
-      config.connectDB();
+      config.connectDb;
       UserDao = UserDaoMongo;
       ProductDao = ProductDaoMongo;
       ContactDao = ContactDaoMongo;
